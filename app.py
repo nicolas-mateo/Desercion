@@ -8,11 +8,10 @@ functionality = st.sidebar.radio('Que Visualizacion Desea',('Mapa Demografico','
 
 if functionality=='Mapa Demografico':
     @st.cache(persist=True)
-    def load_data(nrows):
+    def load_data():
         data = pd.read_csv(DATA_URL)
         return data    
-    data = load_data(100000)
-    print(data.describe())
+    data = load_data()
     st.header("Localizacion Estudiantes por Estrato")
     ESTRATO = st.slider("Estrato", 1, 6)
     st.map(data[data['ESTRATO']==ESTRATO][['lat','long']])
