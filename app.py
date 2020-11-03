@@ -13,6 +13,7 @@ if functionality=='Mapa Demografico':
         return data    
     data = load_data()
     st.header("Localizacion Estudiantes por Estrato")
+    st.write(data.columns)
     ESTRATO = st.slider("Estrato", 1, 6)
     st.map(data[data['ESTRATO']==ESTRATO][['lat','lon']])
 
