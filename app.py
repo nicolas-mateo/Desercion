@@ -7,22 +7,15 @@ DATA_URL = ("caracterizacion_estudiantes_clean.csv")
 functionality = st.sidebar.radio('Que Visualizacion Desea',('Mapa Demografico','Prediccion')) 
 
 if functionality=='Mapa Demografico':
-    @st.cache(persist=True,allow_output_mutation=True)
-    def load_data():
-        types={'TIPO':str,'DOCUMENTO':str,'GENERO':str,'DEPARTAMENTO':str,
-               'FECHA NACIMIENTO':str,'TITULO_BACHILLER':str,'EDAD':str,
-               'ESTADO CIVIL':str,'EPS':str,'INGRESO FAMILIAR':str,
-               'EGRESOS FAMILIAR':str,'SITUACION LABORAL':str,'ESTRATO':float,
-               'TENENCIA DE VIVIENDA':str,'NUMERO DE HERMANOS':float,
-               'NUMERO DE PERSONAS CONVIVE':float,'TIPO_VIVIENDA':str,
-               'GRUPO_VULNERABLE':str,'ID':str,'key':str,'lat':float,'lon':float,'localidad2':str}
-        data = pd.read_csv(DATA_URL,dtype=types)
+    @st.cache(persist=True)
+    def load_data(nrows):
+        data = pd.read_csv(DATA_URL)
         return data    
-    data = load_data()
-    st.header("Localizacion Estudiantes por Estrato")
-    st.write(data.columns)
+    data = load_data(100000)
+    print(data.describe())
+    st.header("Jopo")
     ESTRATO = st.slider("Estrato", 1, 6)
-    st.map(data[data['ESTRATO']==ESTRATO][['lat','lon']])
+    st.map(data.query("ESTRATO >= @ESTRATO")[["latitude", "longitude"]].dropna(how="any"))
 
 if functionality=='Prediccion':
     st.write("""
