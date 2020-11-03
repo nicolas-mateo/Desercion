@@ -13,7 +13,7 @@ if functionality=='Mapa Demografico':
         return data    
     data = load_data(100000)
     print(data.describe())
-    st.header("Jopo")
+    st.header("Localizacion Estudiantes por Estrato")
     ESTRATO = st.slider("Estrato", 1, 6)
     st.map(data.query("ESTRATO >= @ESTRATO")[["latitude", "longitude"]].dropna(how="any"))
 
