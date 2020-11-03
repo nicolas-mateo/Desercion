@@ -9,7 +9,14 @@ functionality = st.sidebar.radio('Que Visualizacion Desea',('Mapa Demografico','
 if functionality=='Mapa Demografico':
     @st.cache(persist=True,allow_output_mutation=True)
     def load_data():
-        data = pd.read_csv(DATA_URL)
+        types={'TIPO':str,'DOCUMENTO':str,'GENERO':str,'DEPARTAMENTO':str,
+               'FECHA NACIMIENTO':str,'TITULO_BACHILLER':str,'EDAD':str,
+               'ESTADO CIVIL':str,'EPS':str,'INGRESO FAMILIAR':str,
+               'EGRESOS FAMILIAR':str,'SITUACION LABORAL':str,'ESTRATO':float,
+               'TENENCIA DE VIVIENDA':str,'NUMERO DE HERMANOS':float,
+               'NUMERO DE PERSONAS CONVIVE':float,'TIPO_VIVIENDA':str,
+               'GRUPO_VULNERABLE':str,'ID':str,'key':str,'lat':float,'lon':float,'localidad2':str}
+        data = pd.read_csv(DATA_URL,dtype=types)
         return data    
     data = load_data()
     st.header("Localizacion Estudiantes por Estrato")
