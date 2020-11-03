@@ -7,6 +7,7 @@ DATA_URL = ("caracterizacion_estudiantes_clean.csv")
 functionality = st.sidebar.radio('Que Visualizacion Desea',('Mapa Demografico','Prediccion')) 
 
 if functionality=='Mapa Demografico':
+    @st.cache(persist=True)
     def load_data():
         data = pd.read_csv(DATA_URL)
         return data    
