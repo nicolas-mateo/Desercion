@@ -8,10 +8,14 @@ functionality = st.sidebar.radio('Que Visualizacion Desea',('Mapa Demografico','
 
 if functionality=='Mapa Demografico':
     @st.cache(persist=True)
-    df = pd.read_csv(DATA_URL)
+    def load_data(nrows):
+        data = pd.read_csv(DATA_URL)
+        return data    
+    data = load_data(100000)
+    print(data.describe())
     st.header("Localizacion Estudiantes por Estrato")
     ESTRATO = st.slider("Estrato", 1, 6)
-    st.map(df.query("ESTRATO >= @ESTRATO")[["geocode_lat", "geocode_lng"]].dropna(how="any"))
+    st.map(data.query("ESTRATO >= @ESTRATO")[["latitude", "longitude"]].dropna(how="any"))
 
 if functionality=='Prediccion':
     st.write("""
