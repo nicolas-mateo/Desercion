@@ -12,6 +12,7 @@ if functionality=='Mapa Demografico':
         data = pd.read_csv(DATA_URL)
         return data    
     data = load_data()
+    data.drop(columns='Unnamed: 0',inplace=True)
     st.header("Localizacion Estudiantes por Estrato")
     st.write(data.columns)
     ESTRATO = st.slider("Estrato", 1, 6)
