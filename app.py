@@ -15,7 +15,7 @@ if functionality=='Mapa Demografico':
     print(data.describe())
     st.header("Localizacion Estudiantes por Estrato")
     ESTRATO = st.slider("Estrato", 1, 6)
-    st.map(data.query("ESTRATO >= @ESTRATO")[["geocode_lat", "geocode_lng"]].dropna(how="any"))
+    st.map(data.query("ESTRATO >= @ESTRATO")[["lat", "long"]].dropna(how="any"))
 
 if functionality=='Prediccion':
     st.write("""
