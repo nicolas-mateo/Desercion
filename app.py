@@ -17,6 +17,7 @@ if functionality=='Mapa Demografico':
     ESTRATO = st.slider("Estrato", 1, 6)
     st.map(data.query("ESTRATO >= @ESTRATO")[["latitude", "longitude"]].dropna(how="any"))
 
+    st.write("Plotly graph")
     fig = px.line(data, x="key", y="EDAD", title='Life expectancy in Canada')
     st.plotly_chart(fig)
     
