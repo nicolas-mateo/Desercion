@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
+import plotly.express as px
 DATA_URL = ("caracterizacion_estudiantes_clean.csv")
 functionality = st.sidebar.radio('Que Visualizacion Desea',('Mapa Demografico','Prediccion')) 
 
