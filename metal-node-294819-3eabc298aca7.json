@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "metal-node-294819",
+  "private_key_id": "3eabc298aca7bdcc9141bd777d109835c27ce891",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC97dLmuJOwsnh9\nzL3xCWsaVZYrdFWp+pvwV7/06rKfFy1F0Vki/uW8fnNvLmhC7pZ7C0qeJ5JklI79\nCydDmKKbtKUNHsDfd9krHEQb3wyH+tGTSYvXyjbTpCPp5D8b6EV8L2tM8y6afS2m\nIgCXslKPBkSb+M78jMIiSskcrzYtp8ErODPZfZ3FhaPRz8obOICkb8t8ye1YDGxM\ns5MlZGdDYnmJXXFcvB5LzApPvFVHqHL8fs2+rsyEhTncQLD8mN9+oWrvUfVxUOWc\n154hNgQeYgSKtzhl9yYN5Zm6WnCEWRx+ivZlVrX1YADudvEci6eWGlQpcVUFGi8j\ns5sBaSitAgMBAAECggEAH5ZTioqtCWiNMILiHhnOZblROdXlv1jOIXk+lAmKfnn4\nzhFErVTOOXygTx/dODB892bH2KjFKJQqebwmog/bD2FKR/XS5veENy7Cxw3gBCd7\nPm8vYkqftrAoRuhudII7OC2cv1X8bLYf5u7lwVTndSD6PSRyrD7utIxSiUI8lPf1\nBCQTXOZnigC8EETaLOnya9c+RE51ukse9U/KL1K1xCrgH7TLgJV/26AkRYx5iKf1\nQxuXzHKg0bfxWRB2rnQ9XOMjxyfJL2vVbGT+PJJQSxWlzDlUv+1POVNminRgWbfd\ny/JvNrvgU90WtiL2AqdbbE7OLCdY6Tw/xy1TUOMmEQKBgQD4Sj2/wiheXPRJqcP1\nCvycJFipcc0WILq6NMJjK1sOhmfO9aPjIqwNdKI7k/9ypm+XfOeyU46KAsYXxtrt\nX2Alj+LSnO25eDldUUuBGkq4cSm4E0UMHP0diOUgZ/zMRJnbsc6OqPpY+jA/6vUi\nkNaKVhRnlG8V22ie10IfcLNEmQKBgQDD06WqB8QxA066lWG0BbJv2weF6+ucqADJ\npyNzSehYSHeNo4WexsZ1OOrjL7Ne9/L/DoCSvqwP0CQghYHEWByszNotToO/CgOb\naI5ddoSWuJPR3aXkhncQgIZLyIJJUM421XG/O9wM8Unhv+4Uc/oGNIVO3Z6NpM9z\ncjhfmT+9NQKBgGYb4hkieAeWosBImNYFlq2AJRZKPtWC0EgTun2eLuxiSf7K9oNK\nlwdRmAZ4bu1vlSTvsTmdM1l+mojcttw4BQptihKjhwBneO/vpuWJMoF3yHhzNEov\nAclLqy8QlN5MuBmpnhD9XTeKbJ1cu0Nj3Vc2311ZpfWPLg9k50SWzKLBAoGAbh1x\nJm8/jyABAUJGsmgRsnxDerbywiBmcP4fHREOKbZ2I5sz49h6eCgNTLrh7iEW7v1E\npz+4mRu9dNwd4D57wV9fv+JKiv4ikRz2EPA4FlisJnKwehRyl0DuQ2b4fCmIC6Vy\nVMpgLpbvqJW4Vp/wk9SssXBFW/i0/oHX2UnfYZECgYA/GReSQBA5WmSYVk2MPYfo\nXyYfh5uSWhxp/kNcSJ94QnFLrAmL79wEwKwxjjBsyNnsafZ9uQRQ/S0PzHcYsGTe\nmWii07TLUsq2YnhNcu53YqnjR7nd4CxRZwOzGUYB/n1K4HrVqPL3OuYqIN6SoGVK\nP9bEzbKQlE3FE6R/QB8hOA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "etitc-693@metal-node-294819.iam.gserviceaccount.com",
+  "client_id": "113182750989542827467",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/etitc-693%40metal-node-294819.iam.gserviceaccount.com"
+}
