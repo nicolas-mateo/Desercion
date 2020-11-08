@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly.express as px
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 DATA_URL = ("caracterizacion_estudiantes_clean.csv")
