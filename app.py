@@ -28,47 +28,41 @@ if functionality=='Información Histórica':
     #limpiar datos localidad en archivo principal
     data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
     data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA CANDELARIA','CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
-
-    location_bog = pd.read_csv("georeferencia_localidad_bog.csv")
-    data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
+    data
+    #location_bog = pd.read_csv("georeferencia_localidad_bog.csv")
+    #data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
 
     #Crear groupby localidad y contar num estudiantes
-    agg = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad", "ESTADO"])["key"].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})
-    agg_all = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])["key"].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})
+    #agg = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad", "ESTADO"])["key"].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})
+    #agg_all = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])["key"].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})
 
     #Mapa por localidad
-    if estado=="Graduado y Desertor": 
-        px.set_mapbox_access_token(open(".mapbox_token").read())
-        fig = px.scatter_mapbox(agg_all, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-        st.plotly_chart(fig)
+    #if estado=="Graduado y Desertor": 
+    #    px.set_mapbox_access_token(open(".mapbox_token").read())
+    #    fig = px.scatter_mapbox(agg_all, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
+    #    st.plotly_chart(fig)
 
-        if st.checkbox("Mostrar datos"):
-            st.table(agg_all[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
+    #    if st.checkbox("Mostrar datos"):
+    #        st.table(agg_all[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
 
-    elif estado=="Graduado":
-        agg1 = agg[agg["ESTADO"] == "GRADUADO"]
-        px.set_mapbox_access_token(open(".mapbox_token").read())
-        fig1 = px.scatter_mapbox(agg1, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-        st.plotly_chart(fig1)
+    #elif estado=="Graduado":
+    #    agg1 = agg[agg["ESTADO"] == "GRADUADO"]
+    #    px.set_mapbox_access_token(open(".mapbox_token").read())
+    #    fig1 = px.scatter_mapbox(agg1, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
+    #    st.plotly_chart(fig1)
 
-        if st.checkbox("Mostrar datos"):
-            st.table(agg1[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
+    #    if st.checkbox("Mostrar datos"):
+    #       st.table(agg1[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
 
-    elif estado=="Desertor":
-        agg2 = agg[agg["ESTADO"] == "DESERTOR"]
-        px.set_mapbox_access_token(open(".mapbox_token").read())
-        fig2 = px.scatter_mapbox(agg2, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-        st.plotly_chart(fig2)
+    #elif estado=="Desertor":
+    #    agg2 = agg[agg["ESTADO"] == "DESERTOR"]
+    #    px.set_mapbox_access_token(open(".mapbox_token").read())
+    #    fig2 = px.scatter_mapbox(agg2, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
+    #    st.plotly_chart(fig2)
 
-        if st.checkbox("Mostrar datos"):
-            st.table(agg2[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
+    #    if st.checkbox("Mostrar datos"):
+    #        st.table(agg2[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
 
-
-    #location_bog = pd.read_csv("georeferencia_localidad_bog.csv", sep=";")
-
-
-    #px.set_mapbox_access_token(open(".mapbox_token").read())
-    #fig2 = px.scatter_mapbox(data, lat="centroid_latlatitude", lon="centroid_lon", color="peak_hour", size="car_hours", color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
 
     #A partir de aqui escribir ale y nico
     st.write("Grafico por Filtros")
