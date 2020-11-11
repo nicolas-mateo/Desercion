@@ -6,15 +6,18 @@ import json
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 
+@st.cache(persist=True)
 DATA_URL = ("grad_desert.csv")
 
+def load_csv(file_name):
+    data = pd.read_csv(file_name)
+    return data
 st.sidebar.title("Tablero Deserción Estudiantil ETITC")
 st.sidebar.write("A continuación se muestran las diferentes opciones de visualización de datos:")
 functionality = st.sidebar.radio('¿Qué visualización desea?',('Información Histórica','Predicción', 'Calculadora')) 
 
 if functionality=='Información Histórica':
     
-    @st.cache(persist=True)
     def load_data(nrows):
         data = pd.read_csv(DATA_URL)
         return data    
