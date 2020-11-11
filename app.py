@@ -6,8 +6,9 @@ import json
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
 
-@st.cache(persist=True)
 DATA_URL = ("grad_desert.csv")
+@st.cache(persist=True)
+
 
 def load_csv(file_name):
     data = pd.read_csv(file_name)
