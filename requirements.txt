@@ -2,3 +2,5 @@ numpy
 pandas
 sklearn
 plotly.express
+json
+geojson_rewind
