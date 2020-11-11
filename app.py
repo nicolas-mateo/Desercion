@@ -19,10 +19,7 @@ functionality = st.sidebar.radio('¿Qué visualización desea?',('Información H
 
 if functionality=='Información Histórica':
     
-    def load_data(nrows):
-        data = pd.read_csv(DATA_URL)
-        return data    
-    data = load_data(100000)
+    data = pd.read_csv(DATA_URL)
 
     st.title("Información Histórica Académica y Sociodemográfica")
     st.header("1. Distribución Estudiantes por Estrato")
@@ -32,7 +29,7 @@ if functionality=='Información Histórica':
     data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
     data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA CANDELARIA','CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
 
-    location_bog = load_csv("georeferencia_localidad_bog.csv")
+    location_bog = pd.read_csv("georeferencia_localidad_bog.csv")
     data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
 
     #Crear groupby localidad y contar num estudiantes
