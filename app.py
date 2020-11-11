@@ -39,7 +39,7 @@ if functionality=='Información Histórica':
 
     #Mapa por localidad
     if estado=="Graduado y Desertor": 
-        #px.set_mapbox_access_token(open(".mapbox_token").read())
+        px.set_mapbox_access_token(open(".mapbox_token").read())
         fig = px.scatter_mapbox(agg_all, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
         st.plotly_chart(fig)
 
@@ -48,7 +48,7 @@ if functionality=='Información Histórica':
 
     elif estado=="Graduado":
         agg1 = agg[agg["ESTADO"] == "GRADUADO"]
-        #px.set_mapbox_access_token(open(".mapbox_token").read())
+        px.set_mapbox_access_token(open(".mapbox_token").read())
         fig1 = px.scatter_mapbox(agg1, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
         st.plotly_chart(fig1)
 
@@ -57,7 +57,7 @@ if functionality=='Información Histórica':
 
     elif estado=="Desertor":
         agg2 = agg[agg["ESTADO"] == "DESERTOR"]
-        #px.set_mapbox_access_token(open(".mapbox_token").read())
+        px.set_mapbox_access_token(open(".mapbox_token").read())
         fig2 = px.scatter_mapbox(agg2, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
         st.plotly_chart(fig2)
 
