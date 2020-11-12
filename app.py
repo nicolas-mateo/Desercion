@@ -15,7 +15,7 @@ def load_csv(file_name):
 
 st.sidebar.title("Tablero Deserción Estudiantil ETITC")
 st.sidebar.write("A continuación se muestran las diferentes opciones de visualización de datos:")
-functionality = st.sidebar.radio('¿Qué visualización desea?',('Información Histórica','Predicción', 'Calculadora')) 
+functionality = st.sidebar.radio('¿Qué visualización desea?',('Información Histórica','Informacion Activos', 'Calculadora')) 
 
 if functionality=='Información Histórica':
     
@@ -51,7 +51,7 @@ if functionality=='Información Histórica':
 
     fig = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} , title='Estudiantes por Estrato y Estado')
     st.plotly_chart(fig)
-    
+
 if functionality=='Calculadora':
     st.write("""
     # Predicción de la deserción *estudiantil* en IETC
