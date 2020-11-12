@@ -10,6 +10,7 @@ DATA_URL = ("grad_desert.csv")
 @st.cache(persist=True)
 
 
+
 st.sidebar.title("Tablero Deserción Estudiantil ETITC")
 st.sidebar.write("A continuación se muestran las diferentes opciones de visualización de datos:")
 functionality = st.sidebar.radio('¿Qué visualización desea?',('Información Histórica','Predicción', 'Calculadora')) 
