@@ -36,7 +36,7 @@ if functionality=='Información Histórica':
     to_map = data_map[data_map['ESTADO'].isin(estado1)].groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])['key'].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})  
 
     px.set_mapbox_access_token(open(".mapbox_token").read())
-    fig = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="LOCALIDAD", size="Num_estudiantes", size_max=20, zoom=10)
+    fig = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
     st.plotly_chart(fig)
     
     if st.checkbox("Mostrar datos"):
