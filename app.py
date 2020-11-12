@@ -21,7 +21,6 @@ if functionality=='Información Histórica':
     
     
     data = pd.read_csv("grad_desert.csv")
-    data
     st.title("Información Histórica Académica y Sociodemográfica")
     st.header("1. Distribución Estudiantes por Localidad y Estado Académico")
     estado1 = st.multiselect(label='Estado de Estudiante', options=['DESERTOR', 'GRADUADO'], default=['DESERTOR', 'GRADUADO']) 
