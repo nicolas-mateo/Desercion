@@ -19,52 +19,31 @@ functionality = st.sidebar.radio('¿Qué visualización desea?',('Información H
 
 if functionality=='Información Histórica':
     
-    data = pd.read_csv(DATA_URL)
+    
+    data = pd.read_csv("grad_desert.csv")
 
     st.title("Información Histórica Académica y Sociodemográfica")
-    st.header("1. Distribución Estudiantes por Estrato")
-    estado = st.selectbox("Estado Estudiante", ("Graduado", "Desertor", "Graduado y Desertor"))
+    st.header("1. Distribución Estudiantes por Localidad y Estado Académico")
+    estado1 = st.multiselect(label='Estado de Estudiante', options=['DESERTOR', 'GRADUADO'], default=['DESERTOR', 'GRADUADO']) 
 
     #limpiar datos localidad en archivo principal
     data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
     data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA CANDELARIA','CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
-    #data
-    location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
-    #location_bog
+
+    location_bog = load_csv("georeferencia_localidad_bog.csv")
     data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
 
-    #Crear groupby localidad y contar num estudiantes
-    agg = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad", "ESTADO"])["key"].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})
-    agg_all = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])["key"].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})
-
     #Mapa por localidad
-    if estado=="Graduado y Desertor": 
-        px.set_mapbox_access_token(open(".mapbox_token").read())
-        fig = px.scatter_mapbox(agg_all, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-        st.plotly_chart(fig)
+    to_map = data_map[data_map['ESTADO'].isin(estado1)].groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])['key'].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})  
 
-        if st.checkbox("Mostrar datos"):
-            st.table(agg_all[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
+    px.set_mapbox_access_token(open(".mapbox_token").read())
+    fig = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
+    st.plotly_chart(fig)
+    
+    if st.checkbox("Mostrar datos"):
+        st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
 
-    elif estado=="Graduado":
-        agg1 = agg[agg["ESTADO"] == "GRADUADO"]
-        px.set_mapbox_access_token(open(".mapbox_token").read())
-        fig1 = px.scatter_mapbox(agg1, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-        st.plotly_chart(fig1)
-
-        if st.checkbox("Mostrar datos"):
-           st.table(agg1[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
-
-    elif estado=="Desertor":
-        agg2 = agg[agg["ESTADO"] == "DESERTOR"]
-        px.set_mapbox_access_token(open(".mapbox_token").read())
-        fig2 = px.scatter_mapbox(agg2, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-        st.plotly_chart(fig2)
-
-        if st.checkbox("Mostrar datos"):
-            st.table(agg2[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
-
-
+    
     #A partir de aqui escribir ale y nico
     st.write("Grafico por Filtros")
     estado=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'])
