@@ -29,8 +29,7 @@ if functionality=='Información Histórica':
     data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
     data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA CANDELARIA','CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
 
-    location_bog = pd.read_csv("georeferencia_localidad_bog.csv")
-    location_bog
+    location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
     data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
 
     #Mapa por localidad
