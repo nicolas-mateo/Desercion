@@ -10,9 +10,6 @@ DATA_URL = ("grad_desert.csv")
 @st.cache(persist=True)
 
 
-def load_csv(file_name):
-    data = pd.read_csv(file_name)
-    return data
 st.sidebar.title("Tablero Deserción Estudiantil ETITC")
 st.sidebar.write("A continuación se muestran las diferentes opciones de visualización de datos:")
 functionality = st.sidebar.radio('¿Qué visualización desea?',('Información Histórica','Predicción', 'Calculadora')) 
@@ -30,7 +27,7 @@ if functionality=='Información Histórica':
     data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
     data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA CANDELARIA','CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
 
-    location_bog = load_csv("georeferencia_localidad_bog.csv")
+    location_bog = pd.read_csv("georeferencia_localidad_bog.csv")
     data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
 
     #Mapa por localidad
