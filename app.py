@@ -27,7 +27,7 @@ if functionality=='Información Histórica':
 
     #limpiar datos localidad en archivo principal
     data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
-    data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('CANDELARIA','LA CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
+    data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA LA CANDELARIA','LA CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
     data
 
 
