@@ -9,7 +9,9 @@ from sklearn.ensemble import RandomForestClassifier
 DATA_URL = ("grad_desert.csv")
 @st.cache(persist=True)
 
-
+def load_csv(file_name):
+    data = pd.read_csv(file_name)
+    return data
 
 st.sidebar.title("Tablero Deserción Estudiantil ETITC")
 st.sidebar.write("A continuación se muestran las diferentes opciones de visualización de datos:")
