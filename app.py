@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
+import plotly.graph_objects as go
 from sklearn.linear_model import LogisticRegression
 import pickle
 
@@ -36,22 +37,38 @@ if functionality=='Información Histórica':
     to_map = data_map[data_map['ESTADO'].isin(estado1)].groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])['key'].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})  
 
     px.set_mapbox_access_token(open(".mapbox_token").read())
-    fig = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-    st.plotly_chart(fig)
+    fig1 = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
+    st.plotly_chart(fig1)
     
     if st.checkbox("Mostrar datos"):
         st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
 
     
     #A partir de aqui escribir ale y nico
-    st.write("Grafico por Filtros")
+    st.write("2. Estudiantes por Estrato y Estado")
     estado=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=1231245151)
     ciclo=st.multiselect(label='Ciclos Propedeuticos',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=4239523092)
     to_plot=data[(data['ESTADO'].isin(estado)) & (data['CICLO'].isin(ciclo))].groupby(['ESTRATO','ESTADO'])['key'].count().reset_index()
 
-    fig = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} , title='Estudiantes por Estrato y Estado')
+    fig2 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} )
     st.plotly_chart(fig)
 
+    st.write("3. Diagrama de Flujo entre Ciclo y Estado")
+
+    z1=data.groupby(['ESTADO','CICLO']).agg({'key':'count'}).reset_index()
+    z1['Percentage'] = 100 * z1['key']  / z1['key'].sum()
+    z1.replace({ 'GRADUADO':3, 'DESERTOR':4},inplace=True)
+    source = z1.CICLO.tolist()
+    target1=z1['ESTADO'].tolist()
+    value1=z1['Percentage'].tolist()
+    opacity = 0.4
+    label=['PROFESIONAL', 'TECNICO' ,'TECNOLOGIA', 'GRADUADO','DESERTOR']
+    link=dict(source=source,target=target1,value=value1 )
+    node = dict(label = label, pad=100, thickness=5)
+    sank = go.Sankey(link = link, node=node)
+    fig3=go.Figure(sank)
+    st.plotly_chart(fig3)
+    
 if functionality=='Calculadora':
     st.write("""
     # Predicción de la deserción *estudiantil* en IETC
