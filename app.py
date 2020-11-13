@@ -1,10 +1,11 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
 from sklearn.linear_model import LogisticRegression
 import pickle
+import plotly.express as px
+import plotly.graph_objects as go
+
 
 DATA_URL = ("grad_desert.csv")
 @st.cache(persist=True)
@@ -68,7 +69,7 @@ if functionality=='Información Histórica':
     sank = go.Sankey(link = link, node=node)
     fig3=go.Figure(sank)
     st.plotly_chart(fig3)
-    
+
 if functionality=='Calculadora':
     st.write("""
     # Predicción de la deserción *estudiantil* en IETC
