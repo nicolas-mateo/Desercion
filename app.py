@@ -58,26 +58,97 @@ if functionality=='Calculadora':
     """)
 
     def user_input_features():
-        sepal_length = st.slider('Notas definitivas del estudiante', 0, 3, 5)
-        sepal_width = st.slider('Notas promedio', 0, 3, 5)
-        petal_length = st.slider('Edad del estudiante', 15, 30, 45)
-        petal_width = st.slider('Estrato', 1, 3, 5)
-        data = {'Notas_definitivas': sepal_length,
-                'Notas_Promedio': sepal_width,
-                'Edad': petal_length,
-                'Estrato': petal_width}
+        prom = st.slider('Promedio del estudiante', 0.0, 5.0)
+        empleo = st.selectbox('Situacion laboral' options = ["DESEMPLEADO", "EMPLEADO", "INDEPENDIENTE", "OTRO", "SIN INFORMACION"])
+        estrato = st.slider('Estrato', 0, 6)
+        programa = st.selectbox("Programa que estudia", 
+        options =  ['PROGRAMA_INGENIERIA_DE_SISTEMAS',
+                    'PROGRAMA_INGENIERIA_ELECTROMECANICA',
+                    'PROGRAMA_INGENIERIA_EN_DISENO_DE_MAQUINAS_Y_PRODUCTOS_INDUSTRIALES',
+                    'PROGRAMA_INGENIERIA_EN_PROCESOS_INDUSTRIALES',
+                    'PROGRAMA_INGENIERIA_MECANICA',
+                    'PROGRAMA_INGENIERIA_MECATRONICA',
+                    'PROGRAMA_TECNICA_PROFESIONAL_EN_DIBUJO_MECANICO_Y_DE_HERRAMIENTAS_INDUSTRIALES',
+                    'PROGRAMA_TECNICA_PROFESIONAL_EN_PROCESOS_DE_MANUFACTURA',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_COMPUTACION',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_DISENO_DE_MAQUINAS',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_ELECTROMECANICA',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_ELECTRONICA_INDUSTRIAL',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_MANTENIMIENTO_INDUSTRIAL',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_MECATRONICA',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_PROCESOS_INDUSTRIALES',
+                    'PROGRAMA_TECNICO_PROFESIONAL_EN_SISTEMAS',
+                    'PROGRAMA_TECNOLOGIA_EN_AUTOMATIZACION_INDUSTRIAL',
+                    'PROGRAMA_TECNOLOGIA_EN_DESARROLLO_DE_SOFTWARE',
+                    'PROGRAMA_TECNOLOGIA_EN_DISENO_DE_MAQUINAS_Y_PRODUCTOS_INDUSTRIALES',
+                    'PROGRAMA_TECNOLOGIA_EN_ELECTROMECANICA',
+                    'PROGRAMA_TECNOLOGIA_EN_GESTION_DE_FABRICACION_MECANICA',
+                    'PROGRAMA_TECNOLOGIA_EN_MECATRONICA',
+                    'PROGRAMA_TECNOLOGIA_EN_MONTAJES_INDUSTRIALES',
+                    'PROGRAMA_TECNOLOGIA_EN_PROCESOS_INDUSTRIALES',
+                    'PROGRAMA_TECNOLOGIA_EN_PRODUCCION_INDUSTRIAL',
+                    'PROGRAMA_TECNOLOGIA_EN_SISTEMAS'])
+
+        data = {
+        'PROMEDIO': 0,
+        'EMPLEO_DESEMPLEADO': 0,
+        'EMPLEO_EMPLEADO': 0,
+        'EMPLEO_INDEPENDIENTE': 0,
+        'EMPLEO_OTRO': 0,
+        'EMPLEO_SIN_INFO': 0,
+        'ESTRATO_0': 0,
+        'ESTRATO_1': 0,
+        'ESTRATO_2': 0,
+        'ESTRATO_3': 0,
+        'ESTRATO_4': 0,
+        'ESTRATO_5': 0,
+        'ESTRATO_6': 0,
+        'PROGRAMA_INGENIERIA_DE_SISTEMAS': 0,
+        'PROGRAMA_INGENIERIA_ELECTROMECANICA': 0,
+        'PROGRAMA_INGENIERIA_EN_DISENO_DE_MAQUINAS_Y_PRODUCTOS_INDUSTRIALES': 0,
+        'PROGRAMA_INGENIERIA_EN_PROCESOS_INDUSTRIALES': 0,
+        'PROGRAMA_INGENIERIA_MECANICA': 0,
+        'PROGRAMA_INGENIERIA_MECATRONICA': 0,
+        'PROGRAMA_TECNICA_PROFESIONAL_EN_DIBUJO_MECANICO_Y_DE_HERRAMIENTAS_INDUSTRIALES': 0,
+        'PROGRAMA_TECNICA_PROFESIONAL_EN_PROCESOS_DE_MANUFACTURA': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_COMPUTACION': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_DISENO_DE_MAQUINAS': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_ELECTROMECANICA': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_ELECTRONICA_INDUSTRIAL': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_MANTENIMIENTO_INDUSTRIAL': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_MECATRONICA': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_PROCESOS_INDUSTRIALES': 0,
+        'PROGRAMA_TECNICO_PROFESIONAL_EN_SISTEMAS': 0,
+        'PROGRAMA_TECNOLOGIA_EN_AUTOMATIZACION_INDUSTRIAL': 0,
+        'PROGRAMA_TECNOLOGIA_EN_DESARROLLO_DE_SOFTWARE': 0,
+        'PROGRAMA_TECNOLOGIA_EN_DISENO_DE_MAQUINAS_Y_PRODUCTOS_INDUSTRIALES': 0,
+        'PROGRAMA_TECNOLOGIA_EN_ELECTROMECANICA': 0,
+        'PROGRAMA_TECNOLOGIA_EN_GESTION_DE_FABRICACION_MECANICA': 0,
+        'PROGRAMA_TECNOLOGIA_EN_MECATRONICA': 0,
+        'PROGRAMA_TECNOLOGIA_EN_MONTAJES_INDUSTRIALES': 0,
+        'PROGRAMA_TECNOLOGIA_EN_PROCESOS_INDUSTRIALES': 0,
+        'PROGRAMA_TECNOLOGIA_EN_PRODUCCION_INDUSTRIAL': 0,
+        'PROGRAMA_TECNOLOGIA_EN_SISTEMAS': 0}
+        data["PROMEDIO"] = (prom - 3.176382)/0.921185
+        empleo = "EMPLEO_"+empleo 
+        data[empleo] = 1
+        estrato = f"ESTRATO_{estrato}"
+        data[estrato] = 1
+        data[programa] = 1 
         features = pd.DataFrame(data, index=[0])
         return features
 
 
 
     df=user_input_features()
-    st.subheader('User Input parameters')
-    st.write(df)
-    #st.write(prediction)
+    modelr=pickle.load(open('logreg.sav', 'rb'))
+    predictions=modelr.predict_proba(df)
+    decision=modelr.predict(df)
+    st.subheader('Probabilidades')
+    st.write(predictions)
 
-    st.subheader('Prediction Probability')
-    #st.write(prediction_proba)
+    st.subheader('Decisiones')
+    st.write(decision)
 
 if functionality=='Informacion Activos':
 
