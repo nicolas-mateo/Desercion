@@ -1,5 +1,5 @@
 numpy
 pandas
 sklearn
-plotly.express
 pickle
+plotly.express
