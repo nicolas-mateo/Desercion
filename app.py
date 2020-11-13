@@ -69,7 +69,7 @@ if functionality=='Información Histórica':
     target1=z1['ESTADO'].tolist()
     value1=z1['Percentage'].tolist()
     label=['DESERTOR','GRADUADO','PROFESIONAL', 'TECNICO' ,'TECNOLOGIA']
-    link=dict(source=target1,target=source,value=value1)
+    link=dict(source=source,target=target1,value=value1)
     node = dict(label = label, pad=100, line = dict(color = "black", width = 0.5), thickness=5)
     sank = go.Sankey(link = link, node=node)
     fig3=go.Figure(data=sank)
