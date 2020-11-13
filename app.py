@@ -65,15 +65,15 @@ if functionality=='Información Histórica':
     st.write(target1)
     value1=z1['Percentage'].tolist()
     st.write(value1)
-    opacity = 0.4
     label=['PROFESIONAL', 'TECNICO' ,'TECNOLOGIA', 'GRADUADO','DESERTOR']
     link=dict(source=source,target=target1,value=value1)
     node = dict(label = label, pad=100, thickness=5)
     sank = go.Sankey(link = link, node=node)
     fig3=go.Figure(sank)
+    st.write(fig3.show())
     st.plotly_chart(fig3)
 
-    st.header("Grafico 4")
+    st.header("4. Grafico Sunburst")
     nota=data.groupby(['PROGRAMA','CICLO','ESTADO', 'key'])['PROMEDIO'].mean().reset_index()
     fig4 = px.sunburst(nota, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
     st.plotly_chart(fig4)
