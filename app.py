@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 import pickle
+import base64
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -180,10 +181,11 @@ if functionality=='Calculadora':
     predictions=modelr.predict_proba(df)
     decision=modelr.predict(df)
     st.subheader('Probabilidades')
-    st.write(predictions)
+    show = pd.DataFrame(data=predictions, columns=["Graduado", "Desertor"])
+    st.write(show)
 
-    st.subheader('Decisiones')
-    st.write(decision)
+    #st.subheader('Decisiones')
+    #st.write(decision)
 
 if functionality=='Informacion Activos':
 
@@ -217,3 +219,21 @@ if functionality=='Informacion Activos':
     to_plot=data[data['PROMEDIO']>0]
     fig8 = px.histogram(data,x='PROMEDIO')
     st.plotly_chart(fig8)
+
+    #st.header('4. Predicciones')
+    #def download_link(object_to_download, download_filename, download_link_text):
+
+    #   if isinstance(object_to_download,pd.DataFrame):
+    #        object_to_download = object_to_download.to_csv(index=False)
+
+    #     some strings <-> bytes conversions necessary here
+    #    b64 = base64.b64encode(object_to_download.encode()).decode()
+
+    #    return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
+    #df=pd.read_csv('df_activos_Final.csv')
+    #model=pickle.load(open('logreg.sav', 'rb'))
+    #df[['PROB_0','PROB_1']]=modelr.predict_proba(df)
+    #df['PREDICCION']=modelr.predict(df.loc[:,df.columns.difference(['PROB_0','PROB_1'])])
+    #data=data.merge(df[['PROB_0','PROB_1','PREDICCION']], on='key',how='inner')
+
+
