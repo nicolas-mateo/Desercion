@@ -58,15 +58,15 @@ if functionality=='Información Histórica':
 
     z1=data.groupby(['ESTADO','CICLO'])['key'].count().reset_index()
     z1['Percentage'] = 100 * z1['key']  / z1['key'].sum()
-    z1.replace({'GRADUADO':3, 'DESERTOR':4},inplace=True)
+    z1.replace({'PROFESIONAL':2, 'TECNICO':3,'TECNOLOGIA':4},inplace=True)
     source = z1.CICLO.tolist()
     #st.write(source)
     target1=z1['ESTADO'].tolist()
     #st.write(target1)
     value1=z1['Percentage'].tolist()
     #st.write(value1)
-    label=['PROFESIONAL', 'TECNICO' ,'TECNOLOGIA', 'GRADUADO','DESERTOR']
-    link=dict(source=source,target=target1,value=value1)
+    label=['DESERTOR','GRADUADO','PROFESIONAL', 'TECNICO' ,'TECNOLOGIA']
+    link=dict(source=target1,target=source,value=value1)
     node = dict(label = label, pad=100, line = dict(color = "black", width = 0.5), thickness=5)
     sank = go.Sankey(link = link, node=node)
     fig3=go.Figure(data=sank)
