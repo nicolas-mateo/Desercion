@@ -90,6 +90,7 @@ if functionality=='Información Histórica':
     menores=data[(data['ESTADO']=='GRADUADO') & (data['PROMEDIO']<3.0)]
     raros=data[(data['ESTADO']=='DESERTOR') & (data['PROMEDIO']>3.2)]
     st.write(raros)
+    st.write(raros.shape)
 
 if functionality=='Calculadora':
     st.write("""
