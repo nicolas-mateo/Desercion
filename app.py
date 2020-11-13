@@ -199,8 +199,8 @@ if functionality=='Informacion Activos':
     to_map = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])['key'].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})  
 
     px.set_mapbox_access_token(open(".mapbox_token").read())
-    fig = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-    st.plotly_chart(fig)
+    fig6 = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
+    st.plotly_chart(fig6)
     
     if st.checkbox("Mostrar datos"):
         st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
@@ -210,5 +210,10 @@ if functionality=='Informacion Activos':
     ciclo1=st.multiselect(label='Ciclos Propedeuticos',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=4092123)
     to_plot=data[data['CICLO'].isin(ciclo1)].groupby(['ESTRATO','ESTADO'])['key'].count().reset_index()
 
-    fig = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'})
-    st.plotly_chart(fig)        
+    fig7 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'})
+    st.plotly_chart(fig7)     
+
+    st.header('3. Histograma de Promedios')
+
+    fig8 = px.histogram(data,x='PROMEDIO')
+    st.plotly_chart(fig8)
