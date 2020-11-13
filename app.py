@@ -68,8 +68,7 @@ if functionality=='Información Histórica':
     node = dict(label = label, pad=100, thickness=5)
     sank = go.Sankey(link = link, node=node)
     fig3=go.Figure(sank)
-    fig3.show()
-    st.plotly_chart(fig3)
+    st.plotly_chart(fig3.show())
 
 if functionality=='Calculadora':
     st.write("""
