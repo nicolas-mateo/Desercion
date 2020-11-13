@@ -60,10 +60,10 @@ if functionality=='Información Histórica':
     z1=data.groupby(['ESTADO','CICLO'])['key'].count().reset_index()
     z1['Percentage'] = 100 * z1['key']  / z1['key'].sum()
     z1.replace({'PROFESIONAL':2, 'TECNICO':3,'TECNOLOGIA':4},inplace=True)
-    z1['ESTADO']=pd.factorize(z['ESTADO'])[0]
+    z1['ESTADO']=pd.factorize(z1['ESTADO'])[0]
     
-    z['ESTADO']=z['ESTADO'].astype("category")
-    z['CICLO']=z['CICLO'].astype("category")
+    z1['ESTADO']=z1['ESTADO'].astype("category")
+    z1['CICLO']=z1['CICLO'].astype("category")
     
     source = z1.CICLO.tolist()
     target1=z1['ESTADO'].tolist()
