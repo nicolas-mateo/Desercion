@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 from sklearn.linear_model import LogisticRegression
+import pickle
 
 DATA_URL = ("grad_desert.csv")
 @st.cache(persist=True)
