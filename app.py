@@ -46,7 +46,7 @@ if functionality=='Información Histórica':
 
     
     #A partir de aqui escribir ale y nico
-    st.write("2. Estudiantes por Estrato y Estado")
+    st.header("2. Estudiantes por Estrato y Estado")
     estado=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=1231245151)
     ciclo=st.multiselect(label='Ciclos Propedeuticos',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=4239523092)
     to_plot=data[(data['ESTADO'].isin(estado)) & (data['CICLO'].isin(ciclo))].groupby(['ESTRATO','ESTADO'])['key'].count().reset_index()
@@ -54,9 +54,9 @@ if functionality=='Información Histórica':
     fig2 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} )
     st.plotly_chart(fig2)
 
-    st.write("3. Diagrama de Flujo entre Ciclo y Estado")
+    st.header("3. Diagrama de Flujo entre Ciclo y Estado")
 
-    z1=data.groupby(['ESTADO','CICLO']).agg({'key':'count'}).reset_index()
+    z1=data.groupby(['ESTADO','CICLO'])['key'].count().reset_index()
     z1['Percentage'] = 100 * z1['key']  / z1['key'].sum()
     z1.replace({ 'GRADUADO':3, 'DESERTOR':4},inplace=True)
     source = z1.CICLO.tolist()
@@ -68,7 +68,12 @@ if functionality=='Información Histórica':
     node = dict(label = label, pad=100, thickness=5)
     sank = go.Sankey(link = link, node=node)
     fig3=go.Figure(sank)
-    st.plotly_chart(fig3.show())
+    st.plotly_chart(fig3)
+
+    st.header("Grafico 4")
+    nota=data.groupby(['PROGRAMA','CICLO','ESTADO', 'key'])['PROMEDIO'].mean().reset_index()
+    fig4 = px.sunburst(notas, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
+    st.plotly_chart(fig4)
 
 if functionality=='Calculadora':
     st.write("""
