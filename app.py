@@ -82,7 +82,7 @@ if functionality=='Información Histórica':
 
     st.header("5. Histograma de Promedios")
     estado2=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=32654897123)
-    to_plot=data[(data['ESTADO'].isin(estado2))]
+    to_plot=data[(data['ESTADO'].isin(estado2)) & (data['PROMEDIO']>0)]
 
     fig5 = px.histogram(to_plot,x='PROMEDIO', color='ESTADO')
     st.plotly_chart(fig5)
@@ -214,6 +214,6 @@ if functionality=='Informacion Activos':
     st.plotly_chart(fig7)     
 
     st.header('3. Histograma de Promedios')
-
+    to_plot=data[data['PROMEDIO']>0]
     fig8 = px.histogram(data,x='PROMEDIO')
     st.plotly_chart(fig8)
