@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
-import json
-from sklearn import datasets
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 
 DATA_URL = ("grad_desert.csv")
 @st.cache(persist=True)
@@ -75,23 +73,29 @@ if functionality=='Calculadora':
     df=user_input_features()
     st.subheader('User Input parameters')
     st.write(df)
-
-    iris = datasets.load_iris()
-    X = iris.data
-    Y = iris.target
-
-    clf = RandomForestClassifier()
-    clf.fit(X, Y)
-
-    prediction = clf.predict(df)
-    prediction_proba = clf.predict_proba(df)
-
-    st.subheader('Estado de los estudiantes')
-    st.write(iris.target_names)
-
-    st.subheader('Prediction')
-    st.write(iris.target_names[prediction])
     #st.write(prediction)
 
     st.subheader('Prediction Probability')
-    st.write(prediction_proba)
+    #st.write(prediction_proba)
+
+if functionality=='Informacion Activos':
+
+    st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
+    st.header("1. Distribución Estudiantes por Localidad y Estado Académico")
+    data = pd.read_csv("activos.csv")
+    location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
+    
+    data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
+    data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA LA CANDELARIA','LA CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
+
+    data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
+    to_map = data_map[data_map['ESTADO'].isin(estado1)].groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])['key'].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})  
+
+    px.set_mapbox_access_token(open(".mapbox_token").read())
+    fig = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
+    st.plotly_chart(fig)
+    
+    if st.checkbox("Mostrar datos"):
+        st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
+
+    
