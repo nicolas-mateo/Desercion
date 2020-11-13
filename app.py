@@ -169,3 +169,11 @@ if functionality=='Informacion Activos':
     
     if st.checkbox("Mostrar datos"):
         st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
+    
+    st.header("2. Distribución Estudiantes Estrato")
+
+    ciclo1=st.multiselect(label='Ciclos Propedeuticos',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=4092123)
+    to_plot=data[data['CICLO'].isin(ciclo)].groupby(['ESTRATO','ESTADO'])['key'].count().reset_index()
+
+    fig = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'})
+    st.plotly_chart(fig)        
