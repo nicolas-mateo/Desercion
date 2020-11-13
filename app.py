@@ -60,11 +60,14 @@ if functionality=='Información Histórica':
     z1['Percentage'] = 100 * z1['key']  / z1['key'].sum()
     z1.replace({ 'GRADUADO':3, 'DESERTOR':4},inplace=True)
     source = z1.CICLO.tolist()
+    st.write(source)
     target1=z1['ESTADO'].tolist()
+    st.write(target1)
     value1=z1['Percentage'].tolist()
+    st.write(value1)
     opacity = 0.4
     label=['PROFESIONAL', 'TECNICO' ,'TECNOLOGIA', 'GRADUADO','DESERTOR']
-    link=dict(source=source,target=target1,value=value1 )
+    link=dict(source=source,target=target1,value=value1)
     node = dict(label = label, pad=100, thickness=5)
     sank = go.Sankey(link = link, node=node)
     fig3=go.Figure(sank)
@@ -72,7 +75,7 @@ if functionality=='Información Histórica':
 
     st.header("Grafico 4")
     nota=data.groupby(['PROGRAMA','CICLO','ESTADO', 'key'])['PROMEDIO'].mean().reset_index()
-    fig4 = px.sunburst(notas, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
+    fig4 = px.sunburst(nota, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
     st.plotly_chart(fig4)
 
 if functionality=='Calculadora':
