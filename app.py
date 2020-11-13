@@ -87,6 +87,8 @@ if functionality=='Información Histórica':
 
     fig5 = px.histogram(to_plot,x='PROMEDIO', color='ESTADO')
     st.plotly_chart(fig5)
+    menores=data[(data['ESTADO']=='GRADUADO') & (data['PROMEDIO']<3.0)]
+    st.write(menores)
 
 if functionality=='Calculadora':
     st.write("""
