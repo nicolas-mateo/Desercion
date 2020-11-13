@@ -59,7 +59,7 @@ if functionality=='Calculadora':
 
     def user_input_features():
         prom = st.slider('Promedio del estudiante', 0.0, 5.0)
-        empleo = st.selectbox('Situacion laboral' options = ["DESEMPLEADO", "EMPLEADO", "INDEPENDIENTE", "OTRO", "SIN INFORMACION"])
+        empleo = st.selectbox('Situacion laboral', options = ["DESEMPLEADO", "EMPLEADO", "INDEPENDIENTE", "OTRO", "SIN INFORMACION"])
         estrato = st.slider('Estrato', 0, 6)
         programa = st.selectbox("Programa que estudia", 
         options =  ['PROGRAMA_INGENIERIA_DE_SISTEMAS',
