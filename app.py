@@ -52,7 +52,7 @@ if functionality=='Información Histórica':
     to_plot=data[(data['ESTADO'].isin(estado)) & (data['CICLO'].isin(ciclo))].groupby(['ESTRATO','ESTADO'])['key'].count().reset_index()
 
     fig2 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} )
-    st.plotly_chart(fig)
+    st.plotly_chart(fig2)
 
     st.write("3. Diagrama de Flujo entre Ciclo y Estado")
 
