@@ -80,6 +80,13 @@ if functionality=='Información Histórica':
     fig4 = px.sunburst(nota, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
     st.plotly_chart(fig4)
 
+    st.header("5. Histograma de Promedios")
+    estado2=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=32654897123)
+    to_plot=data[(data['ESTADO'].isin(estado2))]
+
+    fig5 = px.histogram(to_plot,x='PROMEDIO', color='ESTADO')
+    st.plotly_chart(fig5)
+
 if functionality=='Calculadora':
     st.write("""
     # Predicción de la deserción *estudiantil* en IETC
