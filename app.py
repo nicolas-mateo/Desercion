@@ -98,5 +98,3 @@ if functionality=='Informacion Activos':
     
     if st.checkbox("Mostrar datos"):
         st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
-
-    
