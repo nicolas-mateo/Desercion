@@ -221,9 +221,6 @@ if functionality=='Informacion Activos':
     df= pd.read_csv('df_activos_Final.csv')
     location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
     modelr=pickle.load(open('logreg.sav', 'rb'))
-    st.write(data)
-
-
 
     df['PREDICTION']=modelr.predict(df[["PROMEDIO","EMPLEO_DESEMPLEADO","EMPLEO_EMPLEADO","EMPLEO_INDEPENDIENTE","EMPLEO_OTRO",
     "EMPLEO_SIN_INFO","ESTRATO_0","ESTRATO_1","ESTRATO_2","ESTRATO_3","ESTRATO_4","ESTRATO_5",
@@ -239,7 +236,6 @@ if functionality=='Informacion Activos':
     "PROGRAMA_TECNOLOGIA_EN_GESTION_DE_FABRICACION_MECANICA","PROGRAMA_TECNOLOGIA_EN_MECATRONICA",
     "PROGRAMA_TECNOLOGIA_EN_MONTAJES_INDUSTRIALES","PROGRAMA_TECNOLOGIA_EN_PROCESOS_INDUSTRIALES",
     "PROGRAMA_TECNOLOGIA_EN_PRODUCCION_INDUSTRIAL","PROGRAMA_TECNOLOGIA_EN_SISTEMAS"]])
-    st.write(df)
     data=data.merge(df[['key','PREDICTION']], on='key',how='inner')
     
     programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
