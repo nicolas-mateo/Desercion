@@ -190,7 +190,7 @@ if functionality=='Calculadora':
         'PROGRAMA_TECNOLOGIA_EN_PROCESOS_INDUSTRIALES': 0,
         'PROGRAMA_TECNOLOGIA_EN_PRODUCCION_INDUSTRIAL': 0,
         'PROGRAMA_TECNOLOGIA_EN_SISTEMAS': 0}
-        data["PROMEDIO"] = (prom - 3.176382)/0.921185
+        data["PROMEDIO"] = (prom - 3.261060)/0.891188
         empleo = "EMPLEO_"+empleo 
         data[empleo] = 1
         estrato = f"ESTRATO_{estrato}"
@@ -240,8 +240,8 @@ if functionality=='Informacion Activos':
     
     programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
     programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
-    fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'})
-    fig25=px.bar(programas_des,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'})
+    fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'},orientation='h')
+    fig25=px.bar(programas_des,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'},orientation='h')
 
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
