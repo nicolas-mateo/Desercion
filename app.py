@@ -101,7 +101,6 @@ if functionality=='Información Histórica':
     alto=data[(data['PROMEDIO']>=3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
     alto['RANGO']='Notas Altas'
     rangos=pd.concat([bajo,alto],ignore_index=True)
-    st.write(rangos)
     
     fig9 = go.Figure()
 
