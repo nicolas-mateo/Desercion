@@ -6,6 +6,7 @@ import pickle
 import base64
 import plotly.express as px
 import plotly.graph_objects as go
+import plotly.figure_factory as ff
 
 
 DATA_URL = ("grad_desert.csv")
@@ -92,10 +93,15 @@ if functionality=='Información Histórica':
     st.write(raros)
     st.write(raros.shape)
 
-    st.header('6. Histograma de Notas por Programa')
+    st.header('6. Distribucion de Promedios')
     
+    tecn=data[data['CICLO']=='TECNICO']['PROMEDIO']
+    tecnolo=data[data['CICLO']=='TECNOLOGIA']['PROMEDIO']
+    prof=data[data['CICLO']=='PROFESIONAL']['PROMEDIO']
+
     ciclo=st.selectbox(label='Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=24563967832465)
-    fig9 = px.box(data, x="CICLO", y="PROMEDIO")
+    fig9 = ff.create_distplot([tecn,tecnolo,prof], ['TECNICO','TECNOLOGIA','PROFESIONAL'], show_hist=False)
+
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
