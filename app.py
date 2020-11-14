@@ -97,7 +97,7 @@ if functionality=='Información Histórica':
     ciclo=st.selectbox(label='Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=24563967832465)
     notasprog=data[(data['CICLO']==ciclo & (data['PROMEDIO']>0))]
     
-    fig9 = px.histogram(notasprog,x='PROMEDIO', color='CICLO')
+    fig9 = px.histogram(notasprog,x='PROMEDIO')
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
