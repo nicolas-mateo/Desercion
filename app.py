@@ -94,10 +94,10 @@ if functionality=='Información Histórica':
 
     st.header('6. Histograma de Notas por Programa')
     
-    programa=st.multiselect(label='Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=None,key=24563967832465)
-    notasprog=data[(data['CICLO'].isin(programa) & (data['PROMEDIO']>0))]
+    ciclo=st.multiselect(label='Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=None,key=24563967832465)
+    notasprog=data[(data['CICLO'].isin(ciclo) & (data['PROMEDIO']>0))]
     
-    fig9 = px.histogram(to_plot,x='PROMEDIO', color='CICLO')
+    fig9 = px.histogram(notasprog,x='PROMEDIO', color='CICLO')
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
