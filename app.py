@@ -215,50 +215,15 @@ if functionality=='Calculadora':
 if functionality=='Informacion Activos':
 
     st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
-    st.header("1. Distribución Estudiantes por Localidad y Estado Académico")
+    st.header("1.")
+    
     data = pd.read_csv("activos.csv")
+    df= pd.read_csv('df_activos_Final.csv')
     location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
+    modelr=pickle.load(open('logreg.sav', 'rb'))
     
-    data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
-    data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA LA CANDELARIA','LA CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
-
-    data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
-    to_map = data_map.groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])['key'].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})  
-
-    px.set_mapbox_access_token(open(".mapbox_token").read())
-    fig6 = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
-    st.plotly_chart(fig6)
+    data[['PREDICT_0','PREDICT_1']]=modelr.predict_proba(df)
+    data['PREDICTION']=modelr.predict(df)
     
-    if st.checkbox("Mostrar datos"):
-        st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
-    
-    st.header("2. Distribución Estudiantes Estrato")
-
-    ciclo1=st.multiselect(label='Ciclos Propedeuticos',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=4092123)
-    to_plot=data[data['CICLO'].isin(ciclo1)].groupby(['ESTRATO','ESTADO'])['key'].count().reset_index()
-
-    fig7 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'})
-    st.plotly_chart(fig7)     
-
-    st.header('3. Histograma de Promedios')
-    to_plot=data[data['PROMEDIO']>0]
-    fig8 = px.histogram(data,x='PROMEDIO')
-    st.plotly_chart(fig8)
-
-    #st.header('4. Predicciones')
-    #def download_link(object_to_download, download_filename, download_link_text):
-
-    #   if isinstance(object_to_download,pd.DataFrame):
-    #        object_to_download = object_to_download.to_csv(index=False)
-
-    #     some strings <-> bytes conversions necessary here
-    #    b64 = base64.b64encode(object_to_download.encode()).decode()
-
-    #    return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
-    #df=pd.read_csv('df_activos_Final.csv')
-    #model=pickle.load(open('logreg.sav', 'rb'))
-    #df[['PROB_0','PROB_1']]=modelr.predict_proba(df)
-    #df['PREDICCION']=modelr.predict(df.loc[:,df.columns.difference(['PROB_0','PROB_1'])])
-    #data=data.merge(df[['PROB_0','PROB_1','PREDICCION']], on='key',how='inner')
-
-
+    programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index()
+    st.write(programas_grad)
