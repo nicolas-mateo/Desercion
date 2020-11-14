@@ -243,6 +243,7 @@ if functionality=='Informacion Activos':
     fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'key':'Numero de Estudiantes'})
     fig25=px.bar(programas_des,x='PROGRAMA',y='key',labels={'key':'Numero de Estudiantes'})
     fig25.update_xaxes(automargin=False)
+    fig25.update_yaxes(automargin=False)
 
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
