@@ -108,14 +108,15 @@ if functionality=='Información Histórica':
     xaxis=dict(title_text="Programa"),
     yaxis=dict(title_text="Numero de Estudiantes"),
     barmode="stack",
-    width=1000
     )
 
     for r in rangos.ESTADO.unique():
         plot_df = rangos[rangos.ESTADO == r]
         fig9.add_trace(
-            go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r,width=0.5),
+            go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r,width=1.0),
         )
+    for annotation in fig9['layout']['annotations']: 
+        annotation['textangle']=-90
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
