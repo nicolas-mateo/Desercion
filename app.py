@@ -94,11 +94,11 @@ if functionality=='Información Histórica':
 
     st.header('6. Grafico de Barras por Programa')
     prom=st.slider('Rango de Promedio Estudiantil',min_value=0.0,max_value=5.0,value=[0.0,5.0])
-    st.write(prom)
+    #st.write(prom)
     to_plot=data[(data['PROMEDIO']>prom[0]) & (data['PROMEDIO']<prom[1])].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
     #fig2 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} )
     fig9=px.bar(to_plot,x='PROGRAMA',y='key',color='ESTADO',labels={'PROGRAMA':'PROGRAMA','key':'Total Estudiantes'})
-
+    st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
     st.write("""
