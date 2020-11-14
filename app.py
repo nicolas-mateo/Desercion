@@ -105,7 +105,7 @@ if functionality=='Información Histórica':
 
     fig9.update_layout(
     template="simple_white",
-    xaxis=dict(title_text="Programa"),
+    xaxis=dict(title_text="Programa",tickangle=90),
     yaxis=dict(title_text="Numero de Estudiantes"),
     barmode="stack",
     )
@@ -115,7 +115,6 @@ if functionality=='Información Histórica':
         fig9.add_trace(
             go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r),
         )
-        fig9.update_xaxes(tickangle=90)
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
