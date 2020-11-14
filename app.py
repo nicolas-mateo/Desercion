@@ -93,7 +93,7 @@ if functionality=='Información Histórica':
     st.write(raros.shape)
 
     st.header('6. Grafico de Barras por Programa')
-    prog=data['PROGRAMAS'].unique().to_list()
+    prog=data['PROGRAMA'].unique().to_list()
     st.write(prog)
     highlow=st.multiselect(label='Rago de Promedio',options=['0.0-3.2','3.2-5.0'],default=['0.0-3.2','3.2-5.0'],key=87643)
     #programa=st.multiselect(label='Programas',options=[data['PROGRAMAS'].unique().to_list()],default=None,key=24563967832465)
