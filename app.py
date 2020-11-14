@@ -93,12 +93,16 @@ if functionality=='Información Histórica':
     st.write(raros.shape)
 
     st.header('6. Grafico de Barras por Programa')
-    prom=st.slider('Rango de Promedio Estudiantil',min_value=0.0,max_value=5.0,value=[0.0,5.0])
-    #st.write(prom)
-    to_plot=data[(data['PROMEDIO']>prom[0]) & (data['PROMEDIO']<prom[1])].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
+    highlow=st.multiselect(label='Rago de Promedio',options=['0.0-3.2','3.2-5.0'],default=['0.0-3.2','3.2-5.0'],key=87643)
+    bajo=data[data['PROMEDIO']<3.2].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
+    bajo['RANGO']='0.0-3.2'
+    alto=data[data['PROMEDIO']>=3.2].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
+    alto['RANGO']='3.2-5.0'
+    rangos=pd.concat([bajo,alto],ignore_index=True)
+    st.write(rangos)
     #fig2 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} )
-    fig9=px.bar(to_plot,x='PROGRAMA',y='key',color='ESTADO',labels={'PROGRAMA':'PROGRAMA','key':'Total Estudiantes'})
-    st.plotly_chart(fig9)
+    #fig9=px.bar(to_plot,x='PROGRAMA',y='key',color='ESTADO',labels={'PROGRAMA':'PROGRAMA','key':'Total Estudiantes'})
+    #st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
     st.write("""
