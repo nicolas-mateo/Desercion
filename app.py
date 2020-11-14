@@ -112,7 +112,7 @@ if functionality=='Información Histórica':
 
     for r in rangos.ESTADO.unique():
         plot_df = rangos[rangos.ESTADO == r]
-        fig.add_trace(
+        fig9.add_trace(
             go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r),
         )
     st.plotly_chart(fig9)
