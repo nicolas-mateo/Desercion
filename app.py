@@ -95,9 +95,7 @@ if functionality=='Información Histórica':
     st.header('6. Histograma de Notas por Programa')
     
     ciclo=st.selectbox(label='Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=24563967832465)
-    notasprog=data[((data['CICLO']==ciclo) & (data['PROMEDIO']>0))]
-    
-    fig9 = px.histogram(notasprog,x='PROMEDIO')
+    fig9 = px.box(data, x="CICLO", y="PROMEDIO")
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
