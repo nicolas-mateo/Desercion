@@ -221,7 +221,8 @@ if functionality=='Informacion Activos':
     df= pd.read_csv('df_activos_Final.csv')
     location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
     modelr=pickle.load(open('logreg.sav', 'rb'))
-    st.write(df.columns.tolist())
+    st.write(data)
+    st.write(df)
 
 
     df['PREDICTION']=modelr.predict(df[["PROMEDIO",
