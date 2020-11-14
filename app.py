@@ -98,9 +98,13 @@ if functionality=='Información Histórica':
     fig4 = px.sunburst(nota, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
     st.plotly_chart(fig4)
 
-
-
-
+    st.header('7. Empleo')
+    empleo=data.groupby(['CICLO','EMPLEO'])['key'].count().reset_index()
+    cycle=st.selectbox('Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'])
+    fig10 = px.bar(empleo, x="CICLO", y="key",
+             color='EMPLEO', barmode='group',
+             height=400, labels={'key':'Numero de Estudiantes'})
+    st.plotly_chart(fig10)
 
 
 
