@@ -113,7 +113,7 @@ if functionality=='Información Histórica':
     for r in rangos.ESTADO.unique():
         plot_df = rangos[rangos.ESTADO == r]
         fig9.add_trace(
-            go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r,width=1.0),
+            go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r),
         )
     for annotation in fig9['layout']['annotations']: 
         annotation['textangle']=-90
