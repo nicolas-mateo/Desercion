@@ -242,12 +242,13 @@ if functionality=='Informacion Activos':
     programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
     fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'key':'Numero de Estudiantes'})
     """fig25=px.bar(programas_des,x='PROGRAMA',y='key')
-    fig25.update_xaxes(automargin=False)
+    fig25.update_xaxes(automargin=False,size=12)
     fig25.update_yaxes(automargin=False)"""
 
 
     fig26 = go.Figure([go.Bar(x=programas_des['PROGRAMA'], y=programas_des['key'])])
     fig26.update_layout(width=800,height=600)
+    fig26.update_xaxes(automargin=False,size=12)
     
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
