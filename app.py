@@ -101,7 +101,20 @@ if functionality=='Información Histórica':
     rangos=pd.concat([bajo,alto],ignore_index=True)
     st.write(rangos)
     
-    fig9=go.Bar(x=[rangos.PROGRAMA,rangos.RANGO],y='key',color='ESTADO')
+    fig9 = go.Figure()
+
+    fig9.update_layout(
+    template="simple_white",
+    xaxis=dict(title_text="Programa"),
+    yaxis=dict(title_text="Numero de Estudiantes"),
+    barmode="stack",
+    )
+
+    for r in rangos.ESTADO.unique():
+        plot_df = rangos[rangos.ESTADO == r]
+        fig.add_trace(
+            go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r),
+        )
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
