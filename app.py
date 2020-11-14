@@ -105,7 +105,7 @@ if functionality=='Información Histórica':
 
     fig9.update_layout(
     template="simple_white",
-    xaxis=dict(title_text="Programa",tickangle=90),
+    xaxis=dict(title_text="Programa",tickangle=45),
     yaxis=dict(title_text="Numero de Estudiantes"),
     barmode="stack",
     )
