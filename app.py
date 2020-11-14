@@ -99,7 +99,11 @@ if functionality=='Información Histórica':
     st.plotly_chart(fig4)
 
     st.header('7. Empleo')
+    total_por_ciclo=data.groupby('CICLO')['key'].count().reset_index()
+
     empleo=data.groupby(['CICLO','EMPLEO'])['key'].count().reset_index()
+    toplot=empleo.merge(total_por_ciclo, on='CICLO',how='inner')
+    st.write(toplot)
     cycle=st.selectbox('Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'])
     fig10 = px.bar(empleo, x="CICLO", y="key",
              color='EMPLEO', barmode='group',
