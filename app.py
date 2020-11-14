@@ -97,7 +97,7 @@ if functionality=='Información Histórica':
     programa=st.multiselect(label='Programas',options=[data['PROGRAMAS'].unique().to_list()],default=None,key=24563967832465)
     bajo=data[(data['PROMEDIO']<3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
     bajo['RANGO']='Notas Bajas'
-    alto=data[(data['PROMEDIO']>=3.2) & (data['PROGRAMA'].isin(programa)].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
+    alto=data[(data['PROMEDIO']>=3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
     alto['RANGO']='Notas Altas'
     rangos=pd.concat([bajo,alto],ignore_index=True)
     st.write(rangos)
