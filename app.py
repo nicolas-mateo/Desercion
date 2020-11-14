@@ -221,9 +221,9 @@ if functionality=='Informacion Activos':
     df= pd.read_csv('df_activos_Final.csv')
     location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
     modelr=pickle.load(open('logreg.sav', 'rb'))
-    
-    df['PREDICTION']=modelr.predict(df)
+    st.write(df.columns.tolist())
+    """df['PREDICTION']=modelr.predict(df[''])
     data=data.merge(df['PREDICTION'], on='key',how='inner')
     
     programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index()
-    st.write(programas_grad)
+    st.write(programas_grad)"""
