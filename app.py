@@ -248,6 +248,7 @@ if functionality=='Informacion Activos':
 
     fig26 = go.Figure([go.Bar(x=programas_des['PROGRAMA'], y=programas_des['key'])])
     fig26.update_xaxes(automargin=False)
+    fig26.update_yaxes(automargin=False)
     
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
