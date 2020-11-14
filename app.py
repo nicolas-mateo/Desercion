@@ -215,7 +215,7 @@ if functionality=='Calculadora':
 if functionality=='Informacion Activos':
 
     st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
-    st.header("1.")
+    
     
     data = pd.read_csv("activos.csv")
     df= pd.read_csv('df_activos_Final.csv')
@@ -267,5 +267,15 @@ if functionality=='Informacion Activos':
     st.write(df)
     data=data.merge(df[['key','PREDICTION']], on='key',how='inner')
     
-    programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index()
-    st.write(programas_grad)
+    programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
+    programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
+    fig24=px.bar(programas_grad,x='PROGRAMA',y='key',label={'PROGRAMA':'Programas','key':'Numero de Estudiantes'})
+    fig25=px.bar(programas_des,x='PROGRAMA',y='key',label={'PROGRAMA':'Programas','key':'Numero de Estudiantes'})
+
+    st.header("1. Programas con Mayor Tendencia a Graduacion")
+    st.plotly_chart(fig24)
+    st.header("2. Programas con Mayor Tendencia a Desercion")
+    st.plotly_chart(fig25)
+
+
+
