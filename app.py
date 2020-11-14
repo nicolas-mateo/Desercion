@@ -24,6 +24,7 @@ if functionality=='Información Histórica':
     
     
     data = pd.read_csv("grad_desert.csv")
+    data['EMPLEO']=data['EMPLEO'].fillna('SIN INFORMACION')
     st.title("Información Histórica Académica y Sociodemográfica")
     st.header("1. Distribución Estudiantes por Localidad y Estado Académico")
     estado1 = st.multiselect(label='Estado de Estudiante', options=['DESERTOR', 'GRADUADO'], default=['DESERTOR', 'GRADUADO']) 
@@ -99,8 +100,8 @@ if functionality=='Información Histórica':
     st.plotly_chart(fig4)
 
     st.header('7. Empleo')
+    
     total_por_ciclo=data.groupby('CICLO')['key'].count().reset_index()
-
     empleo=data.groupby(['CICLO','EMPLEO'])['key'].count().reset_index()
     toplot=empleo.merge(total_por_ciclo, on='CICLO',how='inner')
     toplot['PROPORCION']=toplot['key_x']/toplot['key_y']
