@@ -83,10 +83,6 @@ if functionality=='Información Histórica':
 
     fig5 = px.histogram(to_plot,x='PROMEDIO', color='ESTADO')
     st.plotly_chart(fig5)
-    menores=data[(data['ESTADO']=='GRADUADO') & (data['PROMEDIO']<3.0)]
-    raros=data[(data['ESTADO']=='DESERTOR') & (data['PROMEDIO']>3.2)]
-    st.write(raros)
-    st.write(raros.shape)
 
     st.header('5. Distribucion de Promedios')
     
