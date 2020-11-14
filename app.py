@@ -95,14 +95,14 @@ if functionality=='Información Histórica':
     st.header('6. Grafico de Barras por Programa')
     highlow=st.multiselect(label='Rago de Promedio',options=['0.0-3.2','3.2-5.0'],default=['0.0-3.2','3.2-5.0'],key=87643)
     bajo=data[data['PROMEDIO']<3.2].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
-    bajo['RANGO']='0.0-3.2'
+    bajo['RANGO']='Notas Bajas'
     alto=data[data['PROMEDIO']>=3.2].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
-    alto['RANGO']='3.2-5.0'
+    alto['RANGO']='Notas Altas'
     rangos=pd.concat([bajo,alto],ignore_index=True)
     st.write(rangos)
-    #fig2 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} )
-    #fig9=px.bar(to_plot,x='PROGRAMA',y='key',color='ESTADO',labels={'PROGRAMA':'PROGRAMA','key':'Total Estudiantes'})
-    #st.plotly_chart(fig9)
+    
+    fig9=go.Bar(x=[rangos.PROGRAMA,rangos.RANGO],y='key',color='ESTADO')
+    st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
     st.write("""
