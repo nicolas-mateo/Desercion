@@ -240,8 +240,8 @@ if functionality=='Informacion Activos':
     
     programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
     programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
-    fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'},orientation='h')
-    fig25=px.bar(programas_des,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'},orientation='h')
+    fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'})
+    fig25=px.bar(programas_des,x='PROGRAMA',y='key',labels={'PROGRAMA':'Programas','key':'Numero de Estudiantes'})
 
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
