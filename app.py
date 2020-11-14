@@ -115,6 +115,7 @@ if functionality=='Información Histórica':
         fig9.add_trace(
             go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r),
         )
+    fig9.update_xaxes(tickangle=90)
     st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
