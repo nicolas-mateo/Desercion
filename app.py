@@ -111,7 +111,7 @@ if functionality=='Información Histórica':
     #xaxis=dict(title_text="Programa"),
     #yaxis=dict(title_text="Numero de Estudiantes"),
     #barmode="stack",
-    )
+    #)
 
     #for r in rangos.ESTADO.unique():
     #    plot_df = rangos[rangos.ESTADO == r]
