@@ -103,11 +103,11 @@ if functionality=='Información Histórica':
 
     empleo=data.groupby(['CICLO','EMPLEO'])['key'].count().reset_index()
     toplot=empleo.merge(total_por_ciclo, on='CICLO',how='inner')
-    st.write(toplot)
+    toplot['PROPORCION']=toplot['key_x']/toplot['key_y']
     cycle=st.selectbox('Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'])
-    fig10 = px.bar(empleo, x="CICLO", y="key",
+    fig10 = px.bar(empleo, x="CICLO", y="PROPORCION",
              color='EMPLEO', barmode='group',
-             height=400, labels={'key':'Numero de Estudiantes'})
+             height=400, labels={'PROPORCION':'Proporcion por Empleo'})
     st.plotly_chart(fig10)
 
 
