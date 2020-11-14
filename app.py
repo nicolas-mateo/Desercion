@@ -77,12 +77,7 @@ if functionality=='Información Histórica':
     fig3=go.Figure(data=sank)
     st.plotly_chart(fig3)
 
-    st.header("4. Grafico Sunburst")
-    nota=data.groupby(['PROGRAMA','CICLO','ESTADO', 'key'])['PROMEDIO'].mean().reset_index()
-    fig4 = px.sunburst(nota, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
-    st.plotly_chart(fig4)
-
-    st.header("5. Histograma de Promedios")
+    st.header("4. Histograma de Promedios")
     estado2=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=32654897123)
     to_plot=data[(data['ESTADO'].isin(estado2)) & (data['PROMEDIO']>0)]
 
@@ -93,16 +88,25 @@ if functionality=='Información Histórica':
     st.write(raros)
     st.write(raros.shape)
 
-    st.header('6. Distribucion de Promedios')
+    st.header('5. Distribucion de Promedios')
     
     tecn=data[data['CICLO']=='TECNICO']['PROMEDIO']
     tecnolo=data[data['CICLO']=='TECNOLOGIA']['PROMEDIO']
     prof=data[data['CICLO']=='PROFESIONAL']['PROMEDIO']
-
-    ciclo=st.selectbox(label='Ciclo',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=24563967832465)
     fig9 = ff.create_distplot([tecn,tecnolo,prof], ['TECNICO','TECNOLOGIA','PROFESIONAL'], show_hist=False)
 
     st.plotly_chart(fig9)
+
+    st.header("6. Grafico Sunburst")
+    nota=data.groupby(['PROGRAMA','CICLO','ESTADO', 'key'])['PROMEDIO'].mean().reset_index()
+    fig4 = px.sunburst(nota, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
+    st.plotly_chart(fig4)
+
+
+
+
+
+
 
 if functionality=='Calculadora':
     st.write("""
