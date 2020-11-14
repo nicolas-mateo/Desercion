@@ -93,32 +93,31 @@ if functionality=='Información Histórica':
     st.write(raros.shape)
 
     st.header('6. Grafico de Barras por Programa')
-    prog=data['PROGRAMA'].unique().tolist()
-    st.write(prog)
-    highlow=st.multiselect(label='Rago de Promedio',options=['0.0-3.2','3.2-5.0'],default=['0.0-3.2','3.2-5.0'],key=87643)
-    #programa=st.multiselect(label='Programas',options=[data['PROGRAMAS'].unique().to_list()],default=None,key=24563967832465)
-    #bajo=data[(data['PROMEDIO']<3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
-    #bajo['RANGO']='Notas Bajas'
-    #alto=data[(data['PROMEDIO']>=3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
-    #alto['RANGO']='Notas Altas'
-    #rangos=pd.concat([bajo,alto],ignore_index=True)
-    #st.write(rangos)
     
-    #fig9 = go.Figure()
+    highlow=st.multiselect(label='Rago de Promedio',options=['0.0-3.2','3.2-5.0'],default=['0.0-3.2','3.2-5.0'],key=87643)
+    programa=st.multiselect(label='Programas',options=[data['PROGRAMA'].unique().tolist()],default='INGENIERIA MECANICA',key=24563967832465)
+    bajo=data[(data['PROMEDIO']<3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
+    bajo['RANGO']='Notas Bajas'
+    alto=data[(data['PROMEDIO']>=3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
+    alto['RANGO']='Notas Altas'
+    rangos=pd.concat([bajo,alto],ignore_index=True)
+    st.write(rangos)
+    
+    fig9 = go.Figure()
 
-   # fig9.update_layout(
-    #template="simple_white",
-    #xaxis=dict(title_text="Programa"),
-    #yaxis=dict(title_text="Numero de Estudiantes"),
-    #barmode="stack",
-    #)
+    fig9.update_layout(
+    template="simple_white",
+    xaxis=dict(title_text="Programa"),
+    yaxis=dict(title_text="Numero de Estudiantes"),
+    barmode="stack",
+    )
 
-    #for r in rangos.ESTADO.unique():
-    #    plot_df = rangos[rangos.ESTADO == r]
-    #    fig9.add_trace(
-    #        go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r),
-    #    )
-    #st.plotly_chart(fig9)
+    for r in rangos.ESTADO.unique():
+        plot_df = rangos[rangos.ESTADO == r]
+        fig9.add_trace(
+            go.Bar(x=[plot_df.PROGRAMA, plot_df.RANGO], y=plot_df.key, name=r),
+        )
+    st.plotly_chart(fig9)
 
 if functionality=='Calculadora':
     st.write("""
