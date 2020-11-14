@@ -95,7 +95,7 @@ if functionality=='Información Histórica':
     st.header('6. Grafico de Barras por Programa')
     
     highlow=st.multiselect(label='Rago de Promedio',options=['0.0-3.2','3.2-5.0'],default=['0.0-3.2','3.2-5.0'],key=87643)
-    programa=st.multiselect(label='Programas',options=[data['PROGRAMA'].unique().tolist()],default=None,key=24563967832465)
+    programa=st.multiselect(label='Programas',options=data['PROGRAMA'].unique().tolist(),default=None,key=24563967832465)
     bajo=data[(data['PROMEDIO']<3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
     bajo['RANGO']='Notas Bajas'
     alto=data[(data['PROMEDIO']>=3.2) & (data['PROGRAMA'].isin(programa))].groupby(['PROGRAMA','ESTADO'])['key'].count().reset_index()
