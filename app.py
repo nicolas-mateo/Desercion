@@ -248,9 +248,11 @@ if functionality=='Informacion Activos':
     programas_des=proporciones.sort_values(by=1,ascending=False).head(5)
     fig24=px.bar(programas_grad,x='PROGRAMA',y=[0,1],labels={0:'(%)Graduados',1:'(%) Desertores'},barmode='group')
 
-
-    fig26 = go.Figure([go.Bar(x=programas_des['PROGRAMA'], y=programas_des[0,1])])
-    fig26.update_layout(width=800,height=600)
+    fig26 = go.Figure(data=[
+    go.Bar(name='(%)Graduados', x=programas_des['PROGRAMA'], y=programas_des[0]),
+    go.Bar(name='(%) Desertores', x=programas_des['PROGRAMA'], y=programas_des[1])
+    ])
+    fig26.update_layout(barmode='group',width=800,height=600)
     
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
