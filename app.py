@@ -240,6 +240,8 @@ if functionality=='Informacion Activos':
     totales=data.groupby('PROGRAMA')['key'].count().reset_index()
     proporciones=prediccion.merge(totales[['PROGRAMA','key']],on='PROGRAMA',how='inner')
     proporciones['Proporcion']=100*proporciones['key_x']/proporciones['key_y']
+    proporciones=proporciones.drop(columns=['key_x','key_y'])
+    #proporciones=proporciones.pivot(index='PROGRAMA',columns='')
     st.write(proporciones)
     programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
     programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
