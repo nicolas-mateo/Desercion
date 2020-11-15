@@ -249,10 +249,9 @@ if functionality=='Informacion Activos':
     fig24=px.bar(programas_grad,x='PROGRAMA',y=[0,1],labels={0:'(%)Graduados',1:'(%) Desertores'},barmode='group')
 
 
-    #fig26 = go.Figure([go.Bar(x=programas_des['PROGRAMA'], y=programas_des['key'])])
-    #fig26.update_layout(width=800,height=600)
+    fig25 = px.bar(programas_des,x='PROGRAMA',y=[0,1],labels={0:'(%)Graduados',1:'(%) Desertores'},barmode='group')
     
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
-    #st.header("2. Programas con Mayor Tendencia a Desercion")
-    #st.plotly_chart(fig26)
+    st.header("2. Programas con Mayor Tendencia a Desercion")
+    st.plotly_chart(fig25)
