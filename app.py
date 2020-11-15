@@ -10,7 +10,6 @@ import plotly.graph_objects as go
 import plotly.figure_factory as ff
 
 #Function to load the data in files CSV
-DATA_URL = ("grad_desert.csv")
 
 @st.cache(persist=True)
 def load_csv(file_name):
@@ -26,7 +25,7 @@ functionality = st.sidebar.radio('¿Qué visualización desea?',('Información H
 if functionality=='Información Histórica':
     
     #Import student data
-    data = pd.read_csv("grad_desert.csv")
+    data = load_csv("grad_desert.csv")
     
     #Import the information of localities in Bogota
     location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
@@ -238,12 +237,12 @@ if functionality=='Informacion Activos':
     #Title
     st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
     
-    #Import the data with the predictions for active students
-    data = pd.read_csv("activos.csv")
-    df= pd.read_csv('df_activos_Final.csv')
-    location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
+    #Import the data of active students, and load the logistic regression model
+    data = load_csv("activos.csv")
+    df= load_csv('df_activos_Final.csv')
     modelr=pickle.load(open('logreg.sav', 'rb'))
     
+    #Predict probability of desertion for active student base.
     df['PREDICTION']=modelr.predict(df[["PROMEDIO","EMPLEO_DESEMPLEADO","EMPLEO_EMPLEADO","EMPLEO_INDEPENDIENTE","EMPLEO_OTRO",
     "EMPLEO_SIN_INFO","ESTRATO_0","ESTRATO_1","ESTRATO_2","ESTRATO_3","ESTRATO_4","ESTRATO_5",
     "ESTRATO_6","PROGRAMA_INGENIERIA_DE_SISTEMAS","PROGRAMA_INGENIERIA_ELECTROMECANICA","PROGRAMA_INGENIERIA_EN_DISENO_DE_MAQUINAS_Y_PRODUCTOS_INDUSTRIALES",
@@ -262,12 +261,17 @@ if functionality=='Informacion Activos':
     prediccion=data.groupby(['PROGRAMA','PREDICTION'])['key'].count().reset_index()
     totales=data.groupby('PROGRAMA')['key'].count().reset_index()
     proporciones=prediccion.merge(totales[['PROGRAMA','key']],on='PROGRAMA',how='inner')
+    
+    #Group desertion and graduation by program, and find their proportions
+
     proporciones['Proporcion']=100*proporciones['key_x']/proporciones['key_y']
     proporciones=proporciones.drop(columns=['key_x','key_y'])
     proporciones=proporciones.pivot(index='PROGRAMA',columns='PREDICTION')['Proporcion'].reset_index().fillna(0)
     proporciones.columns.name = None
     programas_grad=proporciones.sort_values(by=0,ascending=False).head(5)
     programas_des=proporciones.sort_values(by=1,ascending=False).head(5)
+
+    #Plot best and worst performing programs, according to our predictions.
     fig24=px.bar(programas_grad,x='PROGRAMA',y=[0,1],labels={0:'(%)Graduados',1:'(%) Desertores'},barmode='group')
 
     fig26 = go.Figure(data=[
