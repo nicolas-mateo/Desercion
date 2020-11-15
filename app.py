@@ -242,9 +242,9 @@ if functionality=='Informacion Activos':
     proporciones['Proporcion']=100*proporciones['key_x']/proporciones['key_y']
     proporciones=proporciones.drop(columns=['key_x','key_y'])
     proporciones=proporciones.pivot(index='PROGRAMA',columns='PREDICTION').reset_index().fillna(0)
-    st.write(proporciones)
-    programas_grad=proporciones.sort_values(by='Proporcion0',ascending=False).head(5)
-    programas_des=proporciones.sort_values(by='Proporcion1',ascending=False).head(5)
+    st.write(proporciones.columns)
+    programas_grad=proporciones.sort_values(by='Proporcion 0',ascending=False).head(5)
+    programas_des=proporciones.sort_values(by='Proporcion 1',ascending=False).head(5)
     fig24=px.bar(programas_grad,x='PROGRAMA',y=['Proporcion 0','Proporcion 1'],labels={'Proporcion0':'(%)Graduados','Proporcion1':'(%) Desertores'})
 
 
