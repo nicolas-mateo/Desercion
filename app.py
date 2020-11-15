@@ -1,3 +1,4 @@
+#Import libraries
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -8,7 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import plotly.figure_factory as ff
 
-
+#Function to load the data in files CSV
 DATA_URL = ("grad_desert.csv")
 @st.cache(persist=True)
 
@@ -16,50 +17,64 @@ def load_csv(file_name):
     data = pd.read_csv(file_name)
     return data
 
+#Information displayed in the sidebar
 st.sidebar.title("Tablero Deserción Estudiantil ETITC")
 st.sidebar.write("A continuación se muestran las diferentes opciones de visualización de datos:")
 functionality = st.sidebar.radio('¿Qué visualización desea?',('Información Histórica','Informacion Activos', 'Calculadora')) 
 
+#To show the historical information
 if functionality=='Información Histórica':
     
-    
+    #Import student data
     data = pd.read_csv("grad_desert.csv")
+    
+    #Import the information of localities in Bogota
+    location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
+
     data['EMPLEO']=data['EMPLEO'].fillna('SIN INFORMACION')
     st.title("Información Histórica Académica y Sociodemográfica")
     st.header("1. Distribución Estudiantes por Localidad y Estado Académico")
     estado1 = st.multiselect(label='Estado de Estudiante', options=['DESERTOR', 'GRADUADO'], default=['DESERTOR', 'GRADUADO']) 
 
-    #limpiar datos localidad en archivo principal
+    #Clean primary dataframe data for further plots
+    data['EMPLEO']=data['EMPLEO'].fillna('SIN INFORMACION')
     data['LOCALIDAD'] = data['LOCALIDAD'].fillna('')
     data['LOCALIDAD'] = data['LOCALIDAD'].apply(lambda x: x.replace('LA LA CANDELARIA','LA CANDELARIA').replace('RAFAEL URIBE','RAFAEL URIBE URIBE'))
 
-
-    location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
+    #Join the information of students with the data of localities
     data_map = data.merge(location_bog, how="left", on="LOCALIDAD").drop(columns=["CODIGO", "gp"], axis=1).rename(columns={"LONGITUD":"long_localidad", "LATITUD":"lat_localidad"})
 
-    #Mapa por localidad
+    #GroupBy by locations and student status
     to_map = data_map[data_map['ESTADO'].isin(estado1)].groupby(["LOCALIDAD", "long_localidad", "lat_localidad"])['key'].count().reset_index().rename(columns={"key":"Num_estudiantes", "LOCALIDAD":"Localidad"})  
 
+    #Create and Show de map
     px.set_mapbox_access_token(open(".mapbox_token").read())
     fig1 = px.scatter_mapbox(to_map, lat="lat_localidad", lon="long_localidad", hover_name="Localidad", size="Num_estudiantes", size_max=20, zoom=10)
     st.plotly_chart(fig1)
-    
+
+    #Add checkbox to show the map data    
     if st.checkbox("Mostrar datos"):
         st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
 
     
-    #A partir de aqui escribir ale y nico
+    #SECOND CHART
+    #Title and Multiselect for the second graph
     st.header("2. Estudiantes por Estrato y Estado")
     estado=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=1231245151)
     ciclo=st.multiselect(label='Ciclos Propedeuticos',options=['TECNICO','TECNOLOGIA','PROFESIONAL'],default=['TECNICO','TECNOLOGIA','PROFESIONAL'],key=4239523092)
+    
+    #Create GroupBy 
     to_plot=data[(data['ESTADO'].isin(estado)) & (data['CICLO'].isin(ciclo))].groupby(['ESTRATO','ESTADO'])['key'].count().reset_index()
 
+    #Create and show the bar chart
     fig2 = px.bar(to_plot,x='ESTRATO', y='key', color='ESTADO',labels={'ESTRATO':'ESTRATO','key':'Total Estudiantes'} )
     st.plotly_chart(fig2)
 
+    #THIRD CHART
+    ## Sankey diagram
     st.header("3. Diagrama de Flujo entre Ciclo y Estado")
 
-
+    #Create and show the sankey diagram
     z1=data.groupby(['ESTADO','CICLO'])['key'].count().reset_index()
     z1['Percentage'] = 100 * z1['key']  / z1['key'].sum()
     z1.replace({'PROFESIONAL':2, 'TECNICO':3,'TECNOLOGIA':4},inplace=True)
@@ -78,15 +93,22 @@ if functionality=='Información Histórica':
     fig3=go.Figure(data=sank)
     st.plotly_chart(fig3)
 
+    #FOURTH CHART
+    #Title and multiselect
+
     st.header("4. Histograma de Promedios")
     estado2=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=32654897123)
     to_plot=data[(data['ESTADO'].isin(estado2)) & (data['PROMEDIO']>0)]
 
+    #Create and show the histrogram
     fig5 = px.histogram(to_plot,x='PROMEDIO', color='ESTADO')
     st.plotly_chart(fig5)
 
+    #FIFTH CHART
+    #Title
     st.header('5. Distribucion de Promedios')
     
+    #Create and show the line chart
     tecn=data[data['CICLO']=='TECNICO']['PROMEDIO']
     tecnolo=data[data['CICLO']=='TECNOLOGIA']['PROMEDIO']
     prof=data[data['CICLO']=='PROFESIONAL']['PROMEDIO']
@@ -94,11 +116,14 @@ if functionality=='Información Histórica':
 
     st.plotly_chart(fig9)
 
+    #SIXTH CHART
+    ## Sunburst
     st.header("6. Grafico Sunburst")
     nota=data.groupby(['PROGRAMA','CICLO','ESTADO', 'key'])['PROMEDIO'].mean().reset_index()
     fig4 = px.sunburst(nota, path=['CICLO','ESTADO', 'PROGRAMA'],  color='PROMEDIO')
     st.plotly_chart(fig4)
 
+    #SEVENTH CHART
     st.header('7. Empleo')
     estado3=st.selectbox(label='Estado de Estudiante', options=['DESERTOR', 'GRADUADO'])
     total_por_ciclo=data[data['ESTADO']==estado3].groupby('CICLO')['key'].count().reset_index()
@@ -111,12 +136,13 @@ if functionality=='Información Histórica':
     st.plotly_chart(fig10)
 
 
-
+#To show the calculator
 if functionality=='Calculadora':
+    #Title
     st.write("""
     # Predicción de la deserción *estudiantil* en IETC
     """)
-
+    #Input parameters
     def user_input_features():
         prom = st.slider('Promedio del estudiante', 0.0, 5.0)
         empleo = st.selectbox('Situacion laboral', options = ["DESEMPLEADO", "EMPLEADO", "INDEPENDIENTE", "OTRO", "SIN_INFO"])
@@ -199,18 +225,19 @@ if functionality=='Calculadora':
         return features
 
 
-
+    #Calculate the prediction
     df=user_input_features()
     modelr=pickle.load(open('logreg.sav', 'rb'))
     predictions=modelr.predict_proba(df)
     decision=modelr.predict(df)
+    
+    #Show the prediction
     st.subheader('Probabilidades')
     show = pd.DataFrame(data=predictions, columns=["Graduado", "Desertor"])
     st.write(show)
 
-    #st.subheader('Decisiones')
-    #st.write(decision)
 
+#Display information about current students
 if functionality=='Informacion Activos':
 
     st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
