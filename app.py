@@ -243,15 +243,15 @@ if functionality=='Informacion Activos':
     proporciones=proporciones.drop(columns=['key_x','key_y'])
     proporciones=proporciones.pivot(index='PROGRAMA',columns='PREDICTION').reset_index().fillna(0)
     st.write(proporciones)
-    programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
-    programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
-    fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'key':'Numero de Estudiantes'})
+    programas_grad=proporciones.sort_values(by='Proporcion 0',ascending=False).head(5)
+    programas_des=proporciones.sort_values(by='Proporcion 1',ascending=False).head(5)
+    fig24=px.bar(programas_grad,x='PROGRAMA',y=['Proporcion 0','Proporcion 1'],labels={'Proporcion 0':'(%)Graduados','Proporcion 1':'(%) Desertores'})
 
 
-    fig26 = go.Figure([go.Bar(x=programas_des['PROGRAMA'], y=programas_des['key'])])
-    fig26.update_layout(width=800,height=600)
+    #fig26 = go.Figure([go.Bar(x=programas_des['PROGRAMA'], y=programas_des['key'])])
+    #fig26.update_layout(width=800,height=600)
     
     st.header("1. Programas con Mayor Tendencia a Graduacion")
     st.plotly_chart(fig24)
-    st.header("2. Programas con Mayor Tendencia a Desercion")
-    st.plotly_chart(fig26)
+    #st.header("2. Programas con Mayor Tendencia a Desercion")
+    #st.plotly_chart(fig26)
