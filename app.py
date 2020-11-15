@@ -25,7 +25,7 @@ functionality = st.sidebar.radio('¿Qué visualización desea?',('Información H
 if functionality=='Información Histórica':
     
     #Import student data
-    data = load_csv("grad_desert.csv")
+    data = pd.read_csv("grad_desert.csv")
     
     #Import the information of localities in Bogota
     location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
@@ -238,8 +238,8 @@ if functionality=='Informacion Activos':
     st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
     
     #Import the data of active students, and load the logistic regression model
-    data = load_csv("activos.csv")
-    df= load_csv('df_activos_Final.csv')
+    data = pd.read_csv("activos.csv")
+    df= pd.read_csv('df_activos_Final.csv')
     modelr=pickle.load(open('logreg.sav', 'rb'))
     
     #Predict probability of desertion for active student base.
