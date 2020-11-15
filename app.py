@@ -270,7 +270,6 @@ if functionality=='Informacion Activos':
     proporciones=proporciones.drop(columns=['key_x','key_y'])
     proporciones=proporciones.pivot(index='PROGRAMA',columns='PREDICTION')['Proporcion'].reset_index().fillna(0)
     proporciones.columns.name = None
-    st.write(proporciones)
     programas_grad=proporciones.sort_values(by=0,ascending=False).head(5)
     programas_des=proporciones.sort_values(by=1,ascending=False).head(5)
     fig24=px.bar(programas_grad,x='PROGRAMA',y=[0,1],labels={0:'(%)Graduados',1:'(%) Desertores'},barmode='group')
