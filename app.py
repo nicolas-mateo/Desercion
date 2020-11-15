@@ -239,6 +239,7 @@ if functionality=='Informacion Activos':
     prediccion=data.groupby(['PROGRAMA','PREDICTION'])['key'].count().reset_index()
     totales=data.groupby('PROGRAMA')['key'].count().reset_index()
     proporciones=prediccion.merge(totales[['PROGRAMA','key']],on='PROGRAMA',how='inner')
+    proporciones['Proporcion']=100*proporciones['key_x']/proporciones['key_y']
     st.write(proporciones)
     programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
     programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
