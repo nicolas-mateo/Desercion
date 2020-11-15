@@ -236,7 +236,10 @@ if functionality=='Informacion Activos':
     "PROGRAMA_TECNOLOGIA_EN_MONTAJES_INDUSTRIALES","PROGRAMA_TECNOLOGIA_EN_PROCESOS_INDUSTRIALES",
     "PROGRAMA_TECNOLOGIA_EN_PRODUCCION_INDUSTRIAL","PROGRAMA_TECNOLOGIA_EN_SISTEMAS"]])
     data=data.merge(df[['key','PREDICTION']], on='key',how='inner')
-    
+    prediccion=data.groupby(['PROGRAMA','PREDICTION'])['key'].count().reset_index()
+    totales=data.groupby('PROGRAMA')['key'].count().reset_index()
+    proporciones=prediccion.merge(totales[['PROGRAMA','key']],on='PROGRAMA',how='inner')
+    st.write(proporciones)
     programas_grad=data[data['PREDICTION']==0].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
     programas_des=data[data['PREDICTION']==1].groupby('PROGRAMA')['key'].count().reset_index().sort_values(by='key',ascending=False).head(5)
     fig24=px.bar(programas_grad,x='PROGRAMA',y='key',labels={'key':'Numero de Estudiantes'})
