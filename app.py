@@ -241,7 +241,8 @@ if functionality=='Informacion Activos':
     proporciones=prediccion.merge(totales[['PROGRAMA','key']],on='PROGRAMA',how='inner')
     proporciones['Proporcion']=100*proporciones['key_x']/proporciones['key_y']
     proporciones=proporciones.drop(columns=['key_x','key_y'])
-    proporciones=proporciones.pivot(index='PROGRAMA',columns='PREDICTION')['Proporcion'].reset_index()
+    proporciones=proporciones.pivot(index='PROGRAMA',columns='PREDICTION')['Proporcion'].reset_index().fillna(0)
+    proporciones.columns.name = None
     st.write(proporciones)
     programas_grad=proporciones.sort_values(by='0',ascending=False).head(5)
     programas_des=proporciones.sort_values(by='1',ascending=False).head(5)
