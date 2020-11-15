@@ -11,8 +11,8 @@ import plotly.figure_factory as ff
 
 #Function to load the data in files CSV
 DATA_URL = ("grad_desert.csv")
-@st.cache(persist=True)
 
+@st.cache(persist=True)
 def load_csv(file_name):
     data = pd.read_csv(file_name)
     return data
@@ -56,7 +56,6 @@ if functionality=='Información Histórica':
     if st.checkbox("Mostrar datos"):
         st.table(to_map[["Localidad", "Num_estudiantes"]].sort_values(by="Num_estudiantes", ascending=False).set_index("Localidad"))
 
-    
     #SECOND CHART
     #Title and Multiselect for the second graph
     st.header("2. Estudiantes por Estrato y Estado")
@@ -79,10 +78,8 @@ if functionality=='Información Histórica':
     z1['Percentage'] = 100 * z1['key']  / z1['key'].sum()
     z1.replace({'PROFESIONAL':2, 'TECNICO':3,'TECNOLOGIA':4},inplace=True)
     z1['ESTADO']=pd.factorize(z1['ESTADO'])[0]
-    
     z1['ESTADO']=z1['ESTADO'].astype("category")
     z1['CICLO']=z1['CICLO'].astype("category")
-    
     source = z1.CICLO.tolist()
     target1=z1['ESTADO'].tolist()
     value1=z1['Percentage'].tolist()
@@ -95,7 +92,6 @@ if functionality=='Información Histórica':
 
     #FOURTH CHART
     #Title and multiselect
-
     st.header("4. Histograma de Promedios")
     estado2=st.multiselect(label='Estado de Estudiante',options=['DESERTOR','GRADUADO'],default=['DESERTOR','GRADUADO'],key=32654897123)
     to_plot=data[(data['ESTADO'].isin(estado2)) & (data['PROMEDIO']>0)]
@@ -113,7 +109,6 @@ if functionality=='Información Histórica':
     tecnolo=data[data['CICLO']=='TECNOLOGIA']['PROMEDIO']
     prof=data[data['CICLO']=='PROFESIONAL']['PROMEDIO']
     fig9 = ff.create_distplot([tecn,tecnolo,prof], ['TECNICO','TECNOLOGIA','PROFESIONAL'], show_hist=False)
-
     st.plotly_chart(fig9)
 
     #SIXTH CHART
@@ -215,7 +210,7 @@ if functionality=='Calculadora':
         'PROGRAMA_TECNOLOGIA_EN_PROCESOS_INDUSTRIALES': 0,
         'PROGRAMA_TECNOLOGIA_EN_PRODUCCION_INDUSTRIAL': 0,
         'PROGRAMA_TECNOLOGIA_EN_SISTEMAS': 0}
-        data["PROMEDIO"] = (prom - 3.261060)/0.891188
+        data["PROMEDIO"] = (prom - 3.261060)/0.891188 
         empleo = "EMPLEO_"+empleo 
         data[empleo] = 1
         estrato = f"ESTRATO_{estrato}"
@@ -223,8 +218,7 @@ if functionality=='Calculadora':
         data[programa] = 1 
         features = pd.DataFrame(data, index=[0])
         return features
-
-
+    
     #Calculate the prediction
     df=user_input_features()
     modelr=pickle.load(open('logreg.sav', 'rb'))
@@ -241,7 +235,6 @@ if functionality=='Calculadora':
 if functionality=='Informacion Activos':
 
     st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
-    
     
     data = pd.read_csv("activos.csv")
     df= pd.read_csv('df_activos_Final.csv')
