@@ -137,6 +137,7 @@ if functionality=='Calculadora':
     st.write("""
     # Predicción de la deserción *estudiantil* en IETC
     """)
+    
     #Input parameters
     def user_input_features():
         prom = st.slider('Promedio del estudiante', 0.0, 5.0)
@@ -233,14 +234,16 @@ if functionality=='Calculadora':
 
 #Display information about current students
 if functionality=='Informacion Activos':
-
+    
+    #Title
     st.title("Información Académica y Sociodemográfica Estudiantes Actuales")
     
+    #Import the data with the predictions for active students
     data = pd.read_csv("activos.csv")
     df= pd.read_csv('df_activos_Final.csv')
     location_bog = pd.read_csv("georeferencia_localidad_bog.csv",sep=';')
     modelr=pickle.load(open('logreg.sav', 'rb'))
-
+    
     df['PREDICTION']=modelr.predict(df[["PROMEDIO","EMPLEO_DESEMPLEADO","EMPLEO_EMPLEADO","EMPLEO_INDEPENDIENTE","EMPLEO_OTRO",
     "EMPLEO_SIN_INFO","ESTRATO_0","ESTRATO_1","ESTRATO_2","ESTRATO_3","ESTRATO_4","ESTRATO_5",
     "ESTRATO_6","PROGRAMA_INGENIERIA_DE_SISTEMAS","PROGRAMA_INGENIERIA_ELECTROMECANICA","PROGRAMA_INGENIERIA_EN_DISENO_DE_MAQUINAS_Y_PRODUCTOS_INDUSTRIALES",
